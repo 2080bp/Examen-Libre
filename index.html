@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Estudio 7° Básico</title>
-  <meta name="description" content="Repasa Matemática, Lenguaje, Ciencias, Historia e Inglés para el examen libre de 7° básico." />
+  <title>Exámenes Libres MINEDUC — Preparación Oficial</title>
+  <meta name="description" content="Prepárate para los exámenes de validación de estudios del MINEDUC. Contenido 100% alineado al temario oficial. 7° y 8° básico, 1° y 2° medio." />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; }
@@ -41,340 +41,106 @@
 
     // ─── DATA ────────────────────────────────────────────────────────────────
 
+    // Contenido alineado a temarios oficiales MINEDUC EPJA 2026
+    // Fuente: epja.mineduc.cl/validacion-de-estudios/material-apoyo-la-examinacion/
     const SUBJECTS = [
       {
-        id: "matematica",
-        name: "Matemática",
-        emoji: "🔢",
+        id: "nb1",
+        name: "7° Básico",
+        emoji: "📗",
         color: "#3B82F6",
         bg: "#EFF6FF",
         accent: "#DBEAFE",
         topics: [
           {
-            id: "enteros",
-            name: "Números Enteros",
-            emoji: "➕➖",
-            tip: "Los números enteros incluyen positivos, negativos y el cero.",
-            explanation: `Los números enteros son como una línea recta: a la derecha están los positivos (+1, +2, +3...) y a la izquierda los negativos (-1, -2, -3...). El cero está en el centro.\n\n🌡️ Ejemplo: Si hace 5°C y baja 8°, la temperatura queda en 5 - 8 = -3°C.`,
-            video: { label: "📺 Números enteros explicados", url: "https://www.youtube.com/results?search_query=numeros+enteros+septimo+basico+en+español" },
+            id: "comprension_lectora",
+            name: "Comprensión Lectora",
+            emoji: "📄",
+            tip: "Lee con calma. Primero entiende el texto completo, luego responde cada pregunta.",
+            explanation: "En el examen leerás textos literarios (cuentos, leyendas) y no literarios (cartas, avisos, noticias, recetas).\n\nDebes saber:\n📌 Información explícita: está escrita directamente en el texto.\n📌 Información implícita: debes deducirla.\n📌 Idea central: de qué trata principalmente el texto.\n📌 Sinónimos: palabras con significado similar.\n📌 Antónimos: palabras con significado contrario.\n\n💡 Truco: Si te preguntan por un sinónimo, reemplaza la palabra en la oración y verifica que tenga sentido.",
+            video: { label: "📺 Comprensión lectora — textos y preguntas", url: "https://www.youtube.com/results?search_query=comprension+lectora+basica+adultos+textos+literarios+no+literarios" },
             exercises: [
-              { q: "¿Cuánto es -3 + 7?", a: "4", hint: "Piensa en la recta numérica: empieza en -3 y avanza 7 pasos hacia la derecha." },
-              { q: "¿Cuánto es 5 - 9?", a: "-4", hint: "Empieza en 5 y retrocede 9 pasos. Llegas al negativo." },
-              { q: "En una mina, el ascensor baja 15 metros y luego sube 6 metros. ¿En qué nivel está?", a: "-9 metros", hint: "Primero anota la bajada como -15, luego suma +6." },
-              { q: "¿Cuál es el resultado de -4 + (-3)?", a: "-7", hint: "Dos negativos juntos se suman y el resultado es negativo." },
-              { q: "La temperatura era -2°C y subió 10°. ¿Cuál es la temperatura ahora?", a: "8°C", hint: "-2 + 10 = 8" },
-              { q: "¿Cuánto es -8 - (-3)?", a: "-5", hint: "Restar un negativo es igual a sumar: -8 + 3 = -5" },
-              { q: "Ordena de menor a mayor: 3, -5, 0, -1, 7", a: "-5, -1, 0, 3, 7", hint: "Los negativos van primero, de mayor valor absoluto a menor." },
-              { q: "¿Cuánto es (-6) + 6?", a: "0", hint: "Un número y su opuesto siempre suman cero." },
-              { q: "Si un buzo está a -12 metros y sube 5, ¿dónde queda?", a: "-7 metros", hint: "-12 + 5 = -7" },
-              { q: "¿Cuál es el opuesto de -15?", a: "15", hint: "El opuesto cambia el signo." },
+              { q: "Un texto dice: 'Anselmo agradece el dinero enviado por su hijo.' ¿Qué tipo de información es esta?", a: "Información explícita, porque está escrita directamente en el texto.", hint: "Si puedes señalar con el dedo dónde dice eso en el texto, es explícita." },
+              { q: "En una carta, el padre escribe: 'Estamos muy orgullosos de ti.' ¿Qué se puede inferir sobre la relación entre padre e hijo?", a: "Es una relación afectuosa y de mutuo apoyo.", hint: "Inferir es deducir lo que el texto sugiere pero no dice con esas palabras exactas." },
+              { q: "'La mezcla de todos estos materiales le dio un maravilloso tañido.' ¿Cuál es el sinónimo de mezcla?\nA. Combinación\nB. Separación\nC. División", a: "A. Combinación. Reemplaza: 'La combinación de todos estos materiales...' tiene sentido.", hint: "Reemplaza la palabra en la oración y ve cuál alternativa mantiene el mismo significado." },
+              { q: "¿Cuál es la idea central de una noticia sobre la sequía que afecta a agricultores del norte de Chile?", a: "La falta de agua y sus consecuencias para los agricultores del norte.", hint: "La idea central resume de qué trata el texto completo, no un detalle puntual." },
+              { q: "Un afiche dice: 'Cuida el agua. Cada gota cuenta.' ¿Cuál es el propósito de este texto?", a: "Persuadir o convencer al lector de cuidar el agua.", hint: "Los afiches buscan llamar la atención y cambiar conductas del lector." },
+              { q: "¿Cuál es el antónimo de la palabra 'alegre'?", a: "Triste.", hint: "Antónimo = palabra de significado contrario." },
+              { q: "Lee: 'El niño corrió hacia la salida porque escuchó la campana.' ¿Por qué corrió el niño?", a: "Porque escuchó la campana que indica el fin de clases.", hint: "Busca la causa: ¿qué pasó ANTES de que corriera?" },
+              { q: "¿Qué elementos tiene una carta formal?", a: "Fecha, encabezado con el destinatario, cuerpo del mensaje, despedida y firma.", hint: "Una carta al alcalde o a una empresa debe tener estos 5 elementos." },
+              { q: "Según una leyenda, un terremoto destruyó un antiguo templo. ¿Qué destruyó el terremoto?", a: "Un antiguo templo.", hint: "La respuesta está escrita directamente en el texto — es información explícita." },
+              { q: "¿Qué es un texto no literario? Da un ejemplo.", a: "Es un texto que entrega información real y útil. Ejemplo: una carta, una noticia o una receta de cocina.", hint: "Piensa: ¿el texto informa o entretiene con una historia inventada?" },
             ],
           },
           {
-            id: "porcentajes",
-            name: "Porcentajes",
-            emoji: "💯",
-            tip: "Porcentaje significa 'de cada 100'. El 50% es la mitad.",
-            explanation: `Un porcentaje es una parte de 100.\n\n📌 Trucos rápidos:\n• 10% → divide entre 10\n• 20% → divide entre 5\n• 25% → divide entre 4\n• 50% → divide entre 2\n\n🛒 Ejemplo: Un producto vale $10.000 y tiene 20% de descuento:\n10.000 ÷ 5 = $2.000 de descuento → pagas $8.000`,
-            video: { label: "📺 Porcentajes fácil y rápido", url: "https://www.youtube.com/results?search_query=porcentajes+septimo+basico+facil+español" },
+            id: "escritura",
+            name: "Producción de Texto Escrito",
+            emoji: "✍️",
+            tip: "Al escribir: define a quién le escribes, para qué, y usa la estructura del tipo de texto pedido.",
+            explanation: "En el examen deberás escribir un texto breve sobre un tema dado.\n\nLo que evalúan:\n✅ Letra legible (clara, palabras separadas)\n✅ Ortografía: tildes, puntuación, uso correcto de letras (c/k/qu, y/ll)\n✅ Gramática: concordancia de género y número\n✅ Estructura según el tipo de texto pedido\n✅ Vocabulario variado\n✅ Propósito claro\n\n📝 Carta formal: fecha + saludo + cuerpo + despedida + firma\nEjemplo del examen: Escribe una carta al alcalde pidiendo mejorar la iluminación de tu calle.",
+            video: { label: "📺 Cómo escribir una carta formal", url: "https://www.youtube.com/results?search_query=como+escribir+carta+formal+adultos+basica+chile" },
             exercises: [
-              { q: "¿Cuánto es el 10% de $50.000?", a: "$5.000", hint: "Divide entre 10: 50.000 ÷ 10 = 5.000" },
-              { q: "¿Cuánto es el 50% de 200?", a: "100", hint: "El 50% es la mitad: 200 ÷ 2 = 100" },
-              { q: "Un producto vale $30.000 con 25% de descuento. ¿Cuánto se descuenta?", a: "$7.500", hint: "25% = ÷4: 30.000 ÷ 4 = 7.500" },
-              { q: "¿Cuánto es el 20% de 150?", a: "30", hint: "20% = ÷5: 150 ÷ 5 = 30" },
-              { q: "Si un libro cuesta $8.000 y hay 10% de IVA, ¿cuánto pagas?", a: "$8.800", hint: "10% de 8.000 = 800. Sumas: 8.000 + 800 = 8.800" },
-              { q: "¿Qué porcentaje representa 25 de 100?", a: "25%", hint: "25 de cada 100 = 25%" },
-              { q: "¿Cuánto es el 75% de 80?", a: "60", hint: "75% = 3/4 del número. 80 ÷ 4 × 3 = 60" },
-              { q: "En una clase de 40 alumnos, el 25% usa anteojos. ¿Cuántos son?", a: "10 alumnos", hint: "25% de 40 = 40 ÷ 4 = 10" },
-              { q: "¿Cuánto es el 15% de $20.000?", a: "$3.000", hint: "10% = 2.000 y 5% = 1.000. Sumalos: 3.000" },
-              { q: "Si una camisa cuesta $15.000 y tiene 20% de descuento, ¿cuánto pagas?", a: "$12.000", hint: "20% de 15.000 = 3.000. 15.000 - 3.000 = 12.000" },
+              { q: "¿Qué debe incluir una carta al alcalde pidiendo mejorar la iluminación de tu calle?", a: "Fecha, saludo al alcalde, explicación del problema, solicitud concreta, despedida y tu firma.", hint: "Imagina que eres vecino y quieres que te hagan caso. Sé claro y respetuoso." },
+              { q: "¿Cuál de estas oraciones tiene concordancia correcta?\nA. 'Los niño fueron al parque.'\nB. 'Las niñas fue al parque.'\nC. 'Los niños fueron al parque.'", a: "C. 'Los niños fueron al parque.' — sujeto plural + verbo plural.", hint: "Sujeto y verbo deben concordar: singular con singular, plural con plural." },
+              { q: "¿Por qué es importante usar conectores en un texto? Da 3 ejemplos.", a: "Para unir ideas y dar fluidez. Ejemplos: 'primero', 'además', 'finalmente'.", hint: "Sin conectores el texto suena cortado. Los conectores son el pegamento de las ideas." },
+              { q: "¿Cuál es el propósito de una receta de cocina?", a: "Instruir paso a paso cómo preparar un alimento.", hint: "Los textos instructivos buscan guiar al lector para que realice algo." },
+              { q: "¿Qué significa 'vocabulario variado'?", a: "Usar sinónimos y expresiones diferentes para no repetir las mismas palabras.", hint: "En vez de escribir 'bueno' cinco veces, usa: excelente, adecuado, positivo, favorable." },
+              { q: "¿Cómo se usa 'porque' y 'por qué'?", a: "'Porque' (sin tilde) responde causas: 'No fui porque estaba enfermo.' 'Por qué' (con tilde) pregunta: '¿Por qué no fuiste?'", hint: "'Porque' sin tilde = responde. 'Por qué' con tilde = pregunta." },
+              { q: "¿Cuál es la diferencia entre 'haya' y 'halla'?", a: "'Haya' es del verbo haber (que haya llegado). 'Halla' es del verbo hallar (lo halla en el cajón).", hint: "Suenan igual pero significan cosas distintas. El contexto indica cuál usar." },
+              { q: "Corrija: 'Los niño fue al parque y jugo con sus amigos.'", a: "Los niños fueron al parque y jugaron con sus amigos.", hint: "Dos errores: concordancia (niños/fueron) y tiempo verbal (jugaron)." },
+              { q: "¿Qué tipo de texto es un aviso de supermercado que anuncia ofertas?", a: "Texto no literario, de tipo publicitario o informativo.", hint: "¿Inventa una historia o entrega información real? Si informa → no literario." },
+              { q: "¿Qué significa que un texto sea 'coherente y cohesionado'?", a: "Coherente: las ideas tienen sentido y no se contradicen. Cohesionado: las ideas están bien unidas con conectores.", hint: "Coherencia = lógica interna. Cohesión = bien conectadas entre sí." },
             ],
           },
           {
-            id: "algebra",
-            name: "Álgebra Básica",
-            emoji: "🔡",
-            tip: "La x es como una caja misteriosa. Tu trabajo es descubrir qué hay dentro.",
-            explanation: `El álgebra usa letras (como x o n) para representar números desconocidos.\n\n🔑 Para resolver una ecuación, debes "despejar la x":\n\nEjemplo: x + 5 = 12\n→ Resto 5 en ambos lados: x = 12 - 5 = 7\n\nRegla de oro: Lo que haces a un lado, lo haces al otro.`,
-            video: { label: "📺 Introducción al álgebra", url: "https://www.youtube.com/results?search_query=algebra+basica+septimo+basico+ecuaciones+español" },
+            id: "numeros_operaciones",
+            name: "Números y Operaciones",
+            emoji: "➕",
+            tip: "Lee bien el problema antes de operar. Identifica qué dato tienes y qué te piden encontrar.",
+            explanation: "Operaciones con números naturales:\n\n➕ Adición (suma): juntar cantidades\n➖ Sustracción (resta): quitar o comparar\n✖️ Multiplicación: sumar grupos iguales\n➗ División: repartir en partes iguales\n\n📌 Orden de operaciones: primero multiplicación y división, luego suma y resta.\n\n💰 Ejemplo real del examen MINEDUC:\nUna empresa cobra $8.000 por instalar y $23.000 por cada m² de vidrio.\n3 vidrios de 2 m²: (6 × $23.000) + (3 × $8.000) = $138.000 + $24.000 = $162.000",
+            video: { label: "📺 Operaciones básicas en contexto cotidiano", url: "https://www.youtube.com/results?search_query=operaciones+aritmeticas+numeros+naturales+problemas+cotidianos+adultos" },
             exercises: [
-              { q: "Resuelve: x + 6 = 14", a: "x = 8", hint: "Resta 6 en ambos lados: x = 14 - 6" },
-              { q: "Resuelve: x - 3 = 10", a: "x = 13", hint: "Suma 3 en ambos lados: x = 10 + 3" },
-              { q: "Resuelve: 2x = 18", a: "x = 9", hint: "Divide ambos lados entre 2: x = 18 ÷ 2" },
-              { q: "Resuelve: x/4 = 5", a: "x = 20", hint: "Multiplica ambos lados por 4: x = 5 × 4" },
-              { q: "Si el doble de un número es 30, ¿cuál es el número?", a: "15", hint: "2x = 30 → x = 15" },
-              { q: "Escribe en álgebra: 'tres veces un número menos 2'", a: "3x - 2", hint: "'tres veces' = 3x, 'menos 2' = -2" },
-              { q: "Resuelve: 3x + 1 = 10", a: "x = 3", hint: "Primero resta 1: 3x = 9. Luego divide entre 3." },
-              { q: "Si la mitad de un número más 3 es igual a 8, ¿cuál es el número?", a: "10", hint: "x/2 + 3 = 8 → x/2 = 5 → x = 10" },
-              { q: "Resuelve: 5x - 5 = 20", a: "x = 5", hint: "Suma 5: 5x = 25. Divide entre 5: x = 5" },
-              { q: "¿Qué expresión algebraica representa 'el triple de x más 4'?", a: "3x + 4", hint: "Triple = ×3, más 4 = +4" },
+              { q: "Una empresa instaló vidrios y cobró $120.000 en total, cobrando $8.000 por cada instalación. ¿Cuántos vidrios instaló?", a: "15 vidrios. (120.000 ÷ 8.000 = 15)", hint: "Si el total es $120.000 y cada vidrio cuesta $8.000, divide el total entre el precio unitario." },
+              { q: "Pagas con un billete de $20.000 un kilo de huesillos que vale $10.140. ¿Cuánto recibes de vuelto?", a: "$9.860. (20.000 – 10.140 = 9.860)", hint: "Vuelto = dinero entregado menos precio del producto." },
+              { q: "¿Cuántas bolsas de 200 g puedes comprar con $20.000 si cada una vale $1.780?", a: "11 bolsas. (20.000 ÷ 1.780 ≈ 11,2 → solo 11 bolsas completas)", hint: "Divide $20.000 entre $1.780. Toma solo la parte entera porque no puedes comprar media bolsa." },
+              { q: "50 bolsas de huesillos de 200 g, ¿a cuántos kilogramos equivalen?", a: "10 kg. (50 × 200 g = 10.000 g = 10 kg)", hint: "Multiplica la cantidad por el peso de cada bolsa, luego divide entre 1.000 para pasar a kg." },
+              { q: "Un estacionamiento numera sus lugares así: 21, 23, 25, 27... ¿Cuál es el patrón y cuál sigue?", a: "El patrón suma 2 en cada paso. El siguiente es 29.", hint: "Observa la diferencia entre cada número consecutivo." },
+              { q: "Se encargan 12 bolsas a $1.780 c/u y 10 bolsas a $10.140 c/u. ¿Cuál expresión calcula el total?\nA. (12·1.780) + (10·10.140)\nB. (10+12)·(10.140+1.780)\nC. 12·1.780+10.140·10", a: "A. (12·1.780) + (10·10.140) = $21.360 + $101.400 = $122.760", hint: "Calcula cada grupo por separado y luego suma los resultados." },
+              { q: "¿Cuánto es 345 × 12?", a: "4.140. (345×10 = 3.450 y 345×2 = 690 → 3.450 + 690 = 4.140)", hint: "Descompón: 345×10 más 345×2." },
+              { q: "Una fábrica produce 250 unidades por hora. ¿Cuántas produce en 8 horas?", a: "2.000 unidades. (250 × 8 = 2.000)", hint: "Producción por hora × cantidad de horas." },
+              { q: "¿Qué combinación paga exactamente $5.230?\nA. 4 billetes de $1.000 + 2 monedas de $100 + 3 de $10\nB. 1 billete de $5.000 + 2 monedas de $100 + 3 de $10\nC. 1 billete de $5.000 + 3 monedas de $100 + 2 de $10", a: "B. $5.000 + $200 + $30 = $5.230", hint: "Suma cada opción: B da exactamente $5.230." },
+              { q: "Una señora compra 3 kg de azúcar a $890 el kilo y 2 litros de aceite a $2.350 cada uno. ¿Cuánto paga en total?", a: "$7.370. (3×890 = $2.670) + (2×2.350 = $4.700) = $7.370", hint: "Calcula el costo de cada producto por separado y luego suma." },
             ],
           },
           {
-            id: "circulo",
-            name: "El Círculo",
-            emoji: "⭕",
-            tip: "π (pi) es aproximadamente 3,14. Es el número mágico del círculo.",
-            explanation: `Partes del círculo:\n• Radio (r): del centro al borde\n• Diámetro (d): de un lado al otro (d = 2r)\n• Circunferencia (perímetro): P = π × d\n• Área: A = π × r²  (con π ≈ 3,14)\n\n🍕 Ejemplo: Un círculo de radio 5 cm:\nPerímetro = 3,14 × 10 = 31,4 cm\nÁrea = 3,14 × 25 = 78,5 cm²`,
-            video: { label: "📺 Área y perímetro del círculo", url: "https://www.youtube.com/results?search_query=area+perimetro+circulo+septimo+basico+español" },
+            id: "medidas_geometria",
+            name: "Medidas y Geometría",
+            emoji: "📐",
+            tip: "Perímetro = suma de todos los lados. Área = largo × ancho (rectángulo).",
+            explanation: "Unidades de medida:\n📏 Longitud: mm, cm, m, km (1 km = 1.000 m, 1 m = 100 cm)\n⚖️ Masa: g, kg, tonelada (1 kg = 1.000 g)\n⏱ Tiempo: segundo, minuto (60 s), hora (60 min)\n💵 Moneda: peso chileno, dólar, euro\n\nFiguras geométricas:\n🔷 Cuadrado: 4 lados iguales. Perímetro = 4×lado. Área = lado²\n🔷 Rectángulo: lados opuestos iguales. Área = largo × ancho\n🔺 Triángulo: 3 lados. Perímetro = suma de los 3 lados\n\n💡 Ejemplo del examen:\nVentana rectangular de 1 m × 1,5 m:\nÁrea = 1 × 1,5 = 1,5 m²\nPerímetro = 2×(1+1,5) = 5 m",
+            video: { label: "📺 Perímetro y área de figuras geométricas", url: "https://www.youtube.com/results?search_query=perimetro+area+rectangulo+triangulo+cuadrado+basica+adultos" },
             exercises: [
-              { q: "¿Cuál es el diámetro de un círculo con radio 7 cm?", a: "14 cm", hint: "d = 2 × r = 2 × 7 = 14" },
-              { q: "¿Cuál es el radio si el diámetro es 20 cm?", a: "10 cm", hint: "r = d ÷ 2 = 20 ÷ 2 = 10" },
-              { q: "Calcula el perímetro de un círculo con diámetro 10 cm (π ≈ 3,14)", a: "31,4 cm", hint: "P = π × d = 3,14 × 10 = 31,4" },
-              { q: "Calcula el área de un círculo con radio 3 cm (π ≈ 3,14)", a: "28,26 cm²", hint: "A = π × r² = 3,14 × 9 = 28,26" },
-              { q: "Un círculo tiene radio 6. ¿Cuál es su área?", a: "113,04 cm²", hint: "A = 3,14 × 6² = 3,14 × 36 = 113,04" },
-              { q: "¿Cuál es el perímetro de un círculo con radio 5 cm?", a: "31,4 cm", hint: "Primero d = 10, luego P = 3,14 × 10" },
-              { q: "Una piscina circular tiene 8 metros de diámetro. ¿Cuánto mide su borde?", a: "25,12 metros", hint: "P = 3,14 × 8 = 25,12" },
-              { q: "¿Cuánto es π × r² si r = 1?", a: "3,14", hint: "r² = 1, entonces A = 3,14 × 1 = 3,14" },
-              { q: "Un círculo tiene diámetro 14 cm. ¿Cuál es su radio?", a: "7 cm", hint: "r = d ÷ 2" },
-              { q: "¿Cuál es el área de un círculo con diámetro 10 cm?", a: "78,5 cm²", hint: "Primero r = 5, luego A = 3,14 × 25 = 78,5" },
+              { q: "Un vidrio rectangular mide 1 m de ancho y 150 cm de largo. ¿Cuántos m² tiene? Si hay 2 vidrios iguales, ¿cuántos m² en total?", a: "1,5 m² por vidrio. Total: 3 m². (Convierte 150 cm = 1,5 m. Área = 1 × 1,5 = 1,5 m². × 2 = 3 m²)", hint: "Convierte 150 cm a metros: 150 ÷ 100 = 1,5 m. Luego multiplica largo × ancho." },
+              { q: "Un marco de ventana tiene 2 listones de 60 cm y 2 de 90 cm. ¿Cuántos cm de madera se necesitan?", a: "300 cm. (2×60 + 2×90 = 120 + 180 = 300 cm)", hint: "Suma todos los listones: esto es el perímetro del marco." },
+              { q: "¿Qué forma tiene una figura con 4 lados donde el largo es mayor que el ancho y todos sus ángulos son rectos?", a: "Rectángulo.", hint: "Cuatro ángulos rectos y lados opuestos iguales, pero largo ≠ ancho → es rectángulo." },
+              { q: "¿Cuántos gramos hay en 2,5 kilogramos?", a: "2.500 gramos. (1 kg = 1.000 g → 2,5 × 1.000 = 2.500 g)", hint: "Para pasar de kg a g, multiplica por 1.000." },
+              { q: "Un camión carga cajas: 3 kg, 750 g, 1,5 kg, 500 g. Ordénalas de mayor a menor masa.", a: "3 kg, 1,5 kg, 750 g, 500 g", hint: "Convierte todo a gramos: 3.000, 1.500, 750, 500. Luego ordena de mayor a menor." },
+              { q: "¿Cuántos minutos hay en 2 horas y 15 minutos?", a: "135 minutos. (2 × 60 + 15 = 120 + 15 = 135)", hint: "1 hora = 60 minutos. Multiplica las horas y suma los minutos extras." },
+              { q: "Calcula el área de un cuadrado de 7 cm de lado.", a: "49 cm². (Área = 7 × 7 = 49 cm²)", hint: "Área de cuadrado = lado × lado." },
+              { q: "¿Cuántos metros son 3,5 kilómetros?", a: "3.500 metros. (1 km = 1.000 m → 3,5 × 1.000 = 3.500 m)", hint: "Para pasar de km a m, multiplica por 1.000." },
+              { q: "Un triángulo tiene lados de 5 cm, 7 cm y 9 cm. ¿Cuál es su perímetro?", a: "21 cm. (5 + 7 + 9 = 21 cm)", hint: "Perímetro = suma de TODOS los lados de la figura." },
+              { q: "Una pared rectangular mide 4 m de ancho y 2,5 m de alto. ¿Cuántos m² de pintura se necesitan?", a: "10 m². (4 × 2,5 = 10 m²)", hint: "Área de rectángulo = largo × ancho." },
             ],
           },
         ],
       },
-      {
-        id: "lenguaje",
-        name: "Lengua y Literatura",
-        emoji: "📖",
-        color: "#8B5CF6",
-        bg: "#F5F3FF",
-        accent: "#EDE9FE",
-        topics: [
-          {
-            id: "narracion",
-            name: "Análisis Narrativo",
-            emoji: "📚",
-            tip: "Todo cuento tiene un inicio, un conflicto y un desenlace.",
-            explanation: `Al analizar una narración debes fijarte en:\n\n👤 Personajes: ¿Quién es el protagonista? ¿El antagonista?\n⚔️ Conflicto: ¿Cuál es el problema principal?\n📖 Narrador: ¿Quién cuenta la historia? ¿Es un personaje o alguien externo?\n🕐 Tiempo: ¿Los hechos van en orden o hay saltos?\n🎭 Desenlace: ¿Cómo termina todo?`,
-            video: { label: "📺 Cómo analizar un cuento", url: "https://www.youtube.com/results?search_query=analisis+narrativo+septimo+basico+narrador+personajes+español" },
-            exercises: [
-              { q: "¿Qué es el conflicto en una narración?", a: "Es el problema o situación que enfrenta el protagonista y que mueve la historia.", hint: "Sin conflicto no hay historia. Piensa en qué problema tiene que resolver el personaje." },
-              { q: "¿Qué diferencia hay entre narrador y personaje?", a: "El narrador cuenta la historia; los personajes viven la historia.", hint: "El narrador puede ser externo (no participa) o interno (es un personaje)." },
-              { q: "¿Qué es un narrador en primera persona?", a: "Es cuando el que cuenta la historia usa 'yo' y es parte de los hechos.", hint: "Ejemplo: 'Yo vi todo lo que pasó esa noche...'" },
-              { q: "¿Qué significa que los hechos tienen 'orden cronológico'?", a: "Que los eventos se narran en el orden en que ocurrieron, del primero al último.", hint: "Cronológico = en orden de tiempo." },
-              { q: "¿Qué es un flashback en una historia?", a: "Es cuando la narración retrocede en el tiempo para contar algo que ocurrió antes.", hint: "En películas lo verás como 'recuerdo del pasado'." },
-              { q: "¿Cuál es la diferencia entre protagonista y antagonista?", a: "El protagonista es el personaje principal; el antagonista se opone a él.", hint: "En clásicos: héroe vs villano." },
-              { q: "Lee esto y responde: 'Juan corrió al hospital porque su madre estaba enferma.' ¿Cuál es el conflicto?", a: "La madre enferma que lleva a Juan a actuar con urgencia.", hint: "¿Qué problema motiva la acción del personaje?" },
-              { q: "¿Qué es el desenlace de una historia?", a: "Es la parte final donde se resuelve el conflicto.", hint: "Es cuando todo termina y sabes cómo quedó la situación." },
-              { q: "¿Qué información necesitas para describir a un personaje?", a: "Su apariencia, personalidad, papel en la historia y cómo afecta a otros.", hint: "Piensa en cómo es, qué hace y cómo cambia la historia." },
-              { q: "¿Qué son 'elementos en común' entre dos textos?", a: "Aspectos que se repiten, como el tema, el tipo de narrador o el tipo de personajes.", hint: "Compara temas, estilos o tipos de personajes entre cuentos." },
-            ],
-          },
-          {
-            id: "poesia",
-            name: "Análisis de Poesía",
-            emoji: "🌸",
-            tip: "La poesía habla con imágenes y sonidos, no solo con palabras.",
-            explanation: `La poesía usa un lenguaje especial:\n\n🖼️ Imágenes: descripciones que apelan a los sentidos\n🎭 Figuras retóricas: metáfora, personificación, comparación\n🎵 Ritmo y sonoridad: cómo suena al leerlo en voz alta\n😊 Estado de ánimo: la emoción que transmite el poema\n\nEjemplo de metáfora: 'Tus ojos son estrellas' (no son literalmente estrellas, pero brillan igual).`,
-            video: { label: "📺 Figuras literarias explicadas", url: "https://www.youtube.com/results?search_query=figuras+literarias+poesia+septimo+basico+metafora+español" },
-            exercises: [
-              { q: "¿Qué es una metáfora?", a: "Es comparar dos cosas diciendo que una ES la otra, sin usar 'como'.", hint: "Ejemplo: 'La vida es un viaje'." },
-              { q: "¿Qué es una comparación o símil?", a: "Es comparar dos cosas usando 'como' o 'parece'.", hint: "Ejemplo: 'Eres fuerte como un roble'." },
-              { q: "¿Qué es la personificación?", a: "Es darle características humanas a objetos o animales.", hint: "Ejemplo: 'El sol nos sonrió todo el día'." },
-              { q: "¿Qué significa que un poema apela a los sentidos?", a: "Que usa palabras que nos hacen ver, oler, oír, tocar o saborear algo.", hint: "Busca en el poema palabras relacionadas con los 5 sentidos." },
-              { q: "¿Qué es el ritmo en un poema?", a: "Es la musicalidad que se produce por la repetición de sonidos y sílabas al leerlo.", hint: "Léelo en voz alta y sentirás el ritmo como en una canción." },
-              { q: "Identifica la figura literaria: 'Tus palabras son cuchillos'", a: "Metáfora (se compara sin usar 'como').", hint: "¿Se usa 'como' o 'parece'? No → es metáfora." },
-              { q: "¿Qué es el estado de ánimo en un poema?", a: "Es la emoción o sentimiento que transmite el poema al leerlo.", hint: "Puede ser alegría, tristeza, nostalgia, amor, etc." },
-              { q: "Identifica la figura literaria: 'El viento susurró mi nombre'", a: "Personificación (el viento hace algo humano: susurrar).", hint: "¿Le das características humanas a algo que no es humano?" },
-              { q: "¿Para qué sirve la rima en un poema?", a: "Para crear musicalidad, ritmo y hacerlo más fácil de recordar.", hint: "Piensa en canciones: riman para quedarse en la mente." },
-              { q: "¿Qué es interpretar un poema?", a: "Es explicar qué significa el poema basándose en el lenguaje figurado y tu experiencia.", hint: "No hay una sola respuesta. Tu interpretación importa." },
-            ],
-          },
-          {
-            id: "argumentacion",
-            name: "Textos Argumentativos",
-            emoji: "🗣️",
-            tip: "Un argumento tiene una opinión + una razón que la sustenta.",
-            explanation: `Los textos argumentativos buscan convencer.\n\nPartes:\n📌 Tesis: la opinión del autor\n📣 Argumentos: las razones que la apoyan\n📋 Conclusión: el cierre\n\n🔍 Hecho vs Opinión:\n• Hecho: "El 60% de los jóvenes usa redes sociales" (comprobable)\n• Opinión: "Las redes sociales son dañinas para los jóvenes" (debatible)`,
-            video: { label: "📺 Texto argumentativo: cómo identificarlo", url: "https://www.youtube.com/results?search_query=texto+argumentativo+hechos+opiniones+septimo+basico+español" },
-            exercises: [
-              { q: "¿Qué es la tesis en un texto argumentativo?", a: "Es la postura u opinión principal que el autor defiende.", hint: "Busca la idea central que el autor quiere que aceptes." },
-              { q: "¿Qué diferencia hay entre un hecho y una opinión?", a: "Un hecho es comprobable y objetivo; una opinión es subjetiva y debatible.", hint: "Si puedes medirlo o verificarlo, es un hecho. Si depende del punto de vista, es opinión." },
-              { q: "Clasifica: 'Chile tiene más de 19 millones de habitantes.'", a: "Hecho (es verificable con datos oficiales).", hint: "¿Se puede comprobar con datos? Sí → Hecho." },
-              { q: "Clasifica: 'La tecnología hace que los jóvenes sean menos sociables.'", a: "Opinión (es debatible y depende del punto de vista).", hint: "¿Todo el mundo estaría de acuerdo? No → Opinión." },
-              { q: "¿Qué es un argumento?", a: "Es una razón que el autor usa para apoyar su postura.", hint: "Los argumentos responden a la pregunta '¿por qué?' después de la tesis." },
-              { q: "¿Para qué sirven las cartas al director en un diario?", a: "Para que personas expresen su opinión sobre un tema de actualidad.", hint: "Son textos argumentativos del público general." },
-              { q: "¿Qué es un estereotipo en los medios?", a: "Es una imagen o idea simplificada y generalizada sobre un grupo de personas.", hint: "Ejemplo: 'Todos los jóvenes son irresponsables'." },
-              { q: "¿Por qué es importante distinguir hechos de opiniones al leer noticias?", a: "Para no ser manipulado y poder analizar la información críticamente.", hint: "Si confundes opinión con hecho, podrías creer cosas falsas." },
-              { q: "¿Qué es el propósito implícito de un texto?", a: "Es la intención real del autor que no está escrita directamente, pero se puede deducir.", hint: "Pregúntate: '¿Qué quiere que yo haga o piense después de leer esto?'" },
-              { q: "¿Qué elementos tiene una columna de opinión?", a: "Tiene una tesis, argumentos que la apoyan y una conclusión que cierra el texto.", hint: "Es como un mini ensayo con postura clara." },
-            ],
-          },
-        ],
-      },
-      {
-        id: "ciencias",
-        name: "Ciencias Naturales",
-        emoji: "🔬",
-        color: "#10B981",
-        bg: "#ECFDF5",
-        accent: "#D1FAE5",
-        topics: [
-          {
-            id: "fuerzas",
-            name: "Fuerzas",
-            emoji: "⚡",
-            tip: "Las fuerzas son empujones o jalones que cambian el movimiento de los objetos.",
-            explanation: `Tipos de fuerza que debes conocer:\n\n🍎 Gravedad: atrae todo hacia el centro de la Tierra\n🛑 Roce/Fricción: frena el movimiento (estática, cinética y con el aire)\n🌀 Elástica: la de los resortes y elásticos\n\n📌 Curiosidad: cuando caminas, el roce entre tus zapatos y el suelo te impide resbalar. ¡Sin fricción no podrías moverte!`,
-            video: { label: "📺 Tipos de fuerza: gravedad y roce", url: "https://www.youtube.com/results?search_query=fuerzas+gravedad+roce+elastica+septimo+basico+ciencias+español" },
-            exercises: [
-              { q: "¿Qué es la fuerza gravitacional?", a: "Es la fuerza que atrae los objetos hacia el centro de la Tierra.", hint: "Por eso los objetos caen cuando los sueltas." },
-              { q: "¿Qué diferencia hay entre fuerza de roce estática y cinética?", a: "La estática evita que un objeto empiece a moverse; la cinética frena un objeto que ya se mueve.", hint: "Estática = antes de moverse. Cinética = mientras se mueve." },
-              { q: "¿Por qué un paracaidista cae más lento que una piedra?", a: "Porque tiene mayor roce con el aire (resistencia del aire) que lo desacelera.", hint: "El paracaídas aumenta la superficie y, por ende, el roce con el aire." },
-              { q: "¿De qué depende la fuerza de roce?", a: "Del tipo de superficie y del peso del objeto.", hint: "Más rugosa la superficie = más roce. Más pesado = más roce." },
-              { q: "¿Qué pasa con un resorte cuando se le aplica fuerza?", a: "Se estira o comprime, y luego vuelve a su forma original (fuerza elástica).", hint: "Los resortes guardan energía cuando los deformas." },
-              { q: "¿Por qué los astronautas flotan en el espacio?", a: "Porque fuera de la atmósfera no hay gravedad significativa actuando sobre ellos.", hint: "La gravedad disminuye con la distancia a la Tierra." },
-              { q: "¿Qué es una fuerza?", a: "Es un empuje o jalón que puede mover, frenar o deformar un objeto.", hint: "Piensa en cuándo empujas una puerta o jalar un cajón." },
-              { q: "¿Por qué un auto frena cuando pisas el freno?", a: "Porque los frenos generan roce entre las pastillas y los discos, frenando las ruedas.", hint: "Es un ejemplo de fuerza de roce cinética." },
-              { q: "¿Qué fuerza está actuando cuando una pelota sube y luego baja?", a: "La gravedad: primero frena la pelota y luego la jala hacia abajo.", hint: "La gravedad actúa siempre, incluso cuando la pelota va hacia arriba." },
-              { q: "¿Qué ocurre si sueltas una pluma y una piedra al mismo tiempo (sin viento)?", a: "En teoría caen igual de rápido; en la práctica la pluma cae más lento por el roce del aire.", hint: "Galileo demostró que sin aire, caen juntas." },
-            ],
-          },
-          {
-            id: "tectonica",
-            name: "Tectónica de Placas",
-            emoji: "🌍",
-            tip: "Chile es sísmico por estar entre la placa de Nazca y la Sudamericana.",
-            explanation: `La Tierra está cubierta de placas tectónicas (como piezas de un rompecabezas gigante) que se mueven lentamente.\n\nTipos de movimiento:\n🔴 Convergente: las placas chocan (forman montañas o fosas)\n🔵 Divergente: las placas se separan (forman océanos nuevos)\n🟡 Transformante: las placas se deslizan una al lado de la otra (causa terremotos)\n\n🇨🇱 Chile tiene terremotos por el choque entre la Placa de Nazca y la Sudamericana.`,
-            video: { label: "📺 Tectónica de placas y sismos", url: "https://www.youtube.com/results?search_query=tectonica+placas+sismos+volcanes+septimo+basico+español" },
-            exercises: [
-              { q: "¿Qué son las placas tectónicas?", a: "Son grandes fragmentos de la corteza terrestre que se mueven lentamente sobre el manto.", hint: "Imagina la Tierra como un huevo duro con la cáscara fracturada en piezas." },
-              { q: "¿Qué ocurre en un límite convergente?", a: "Dos placas chocan: una puede subir y la otra hundir, formando montañas o fosas.", hint: "Los Andes nacieron por un límite convergente." },
-              { q: "¿Qué ocurre en un límite divergente?", a: "Las placas se separan, dejando salir magma que forma nueva corteza oceánica.", hint: "El océano Atlántico crece cada año por esto." },
-              { q: "¿Por qué Chile tiene tantos terremotos?", a: "Porque está en el límite convergente entre la Placa de Nazca y la Placa Sudamericana.", hint: "Estas dos placas chocan constantemente bajo Chile." },
-              { q: "¿Qué es la deriva continental?", a: "Es la teoría de que los continentes estuvieron unidos (Pangea) y se fueron separando con el tiempo.", hint: "Mira cómo África y América del Sur parecen encajar como piezas de puzzle." },
-              { q: "¿Qué produce el movimiento de las placas?", a: "Las corrientes convectivas del manto terrestre (calor que sube y baja como en una olla).", hint: "El calor interno de la Tierra mueve el material del manto, que arrastra las placas." },
-              { q: "¿Cómo se relacionan las placas tectónicas con los volcanes?", a: "En los bordes de placas convergentes, la placa que se hunde genera magma que puede salir como volcán.", hint: "El Cinturón de Fuego del Pacífico es la zona con más volcanes del mundo." },
-              { q: "¿Qué es un sismo o terremoto?", a: "Es la vibración del suelo causada por el movimiento brusco de las placas tectónicas.", hint: "La energía acumulada se libera de golpe, haciendo temblar la tierra." },
-              { q: "¿Qué tipo de límite tienen las placas cuando se deslizan una junto a la otra?", a: "Límite transformante.", hint: "No chocan ni se separan, solo se rozan lateralmente." },
-              { q: "Nombra las placas tectónicas que afectan directamente a Chile.", a: "La Placa de Nazca, la Placa Sudamericana y la Placa Antártica.", hint: "Chile está en una zona de convergencia de tres placas." },
-            ],
-          },
-          {
-            id: "materia",
-            name: "Materia y Mezclas",
-            emoji: "⚗️",
-            tip: "Todo lo que nos rodea está hecho de materia: puede ser pura o mezclada.",
-            explanation: `La materia puede ser:\n\n🟦 Sustancia pura: tiene composición fija (ej: agua pura, oro)\n🟩 Mezcla homogénea: parece uniforme, no distingues las partes (ej: agua con sal)\n🟥 Mezcla heterogénea: puedes ver las partes distintas (ej: ensalada, arena con piedras)\n\nPara separar mezclas usamos:\n• Decantación: líquido + líquido que no se mezclan\n• Filtración: sólido + líquido\n• Tamizado: sólidos de distintos tamaños\n• Destilación: líquidos con distintos puntos de ebullición`,
-            video: { label: "📺 Mezclas y métodos de separación", url: "https://www.youtube.com/results?search_query=mezclas+homogeneas+heterogeneas+separacion+septimo+basico+español" },
-            exercises: [
-              { q: "¿Qué diferencia hay entre una mezcla homogénea y una heterogénea?", a: "En la homogénea no distingues sus componentes a simple vista; en la heterogénea sí.", hint: "Agua con azúcar = homogénea. Ensalada = heterogénea." },
-              { q: "¿Qué método usarías para separar arena de agua?", a: "Filtración (pasas el líquido por un filtro que retiene los sólidos).", hint: "La arena es sólida, el agua es líquida. Un filtro los puede separar." },
-              { q: "¿Cómo funciona la decantación?", a: "Se deja reposar la mezcla y el líquido más denso se separa del más liviano.", hint: "El aceite flota sobre el agua. Eso es decantación en acción." },
-              { q: "¿Para qué sirve la destilación?", a: "Para separar líquidos que tienen distintos puntos de ebullición, evaporando uno primero.", hint: "El agua hierve a 100°C; el alcohol a menos. Así se separan." },
-              { q: "¿Es el agua del mar una sustancia pura o una mezcla?", a: "Es una mezcla (agua + sal + minerales).", hint: "Si contiene sal disuelta, ya no es agua pura." },
-              { q: "¿Cómo se separa arena fina de grava gruesa?", a: "Con tamizado (se pasa por una malla que deja pasar lo más fino).", hint: "La malla deja pasar los granos pequeños y retiene los grandes." },
-              { q: "¿El oro es una sustancia pura o mezcla?", a: "Es una sustancia pura (elemento químico).", hint: "El oro tiene una composición fija y uniforme." },
-              { q: "¿Qué método se usa para purificar el agua potable?", a: "Principalmente filtración y en algunos pasos también destilación.", hint: "El tratamiento del agua usa filtros para eliminar sólidos y gérmenes." },
-              { q: "Clasifica: jugo de naranja natural con pulpa.", a: "Mezcla heterogénea (puedes ver la pulpa separada del líquido).", hint: "¿Puedes ver partes diferentes? Sí → heterogénea." },
-              { q: "¿En qué procesos industriales se aplica la separación de mezclas?", a: "En minería (separar minerales), metalurgia y tratamiento de aguas servidas.", hint: "La industria usa estos métodos a gran escala para separar materiales útiles." },
-            ],
-          },
-        ],
-      },
-      {
-        id: "historia",
-        name: "Historia y Geografía",
-        emoji: "🏛️",
-        color: "#F59E0B",
-        bg: "#FFFBEB",
-        accent: "#FEF3C7",
-        topics: [
-          {
-            id: "revolucion_agricola",
-            name: "Revolución Agrícola",
-            emoji: "🌾",
-            tip: "La agricultura cambió todo: de nómades pasamos a vivir en ciudades.",
-            explanation: `Antes de la agricultura, las personas eran nómades: cazaban y recolectaban comida moviéndose de lugar en lugar.\n\nCon la Revolución Agrícola (hace ~10.000 años):\n🌱 Se empezó a cultivar plantas\n🐄 Se domesticaron animales\n🏠 Las personas se volvieron sedentarias (se quedaron en un lugar)\n📦 Se acumularon bienes (comida guardada = riqueza)\n🤝 Se desarrolló el comercio\n\n🌍 Surgió en distintos lugares del mundo al mismo tiempo: Medio Oriente, China, América.`,
-            video: { label: "📺 Revolución Neolítica y agricultura", url: "https://www.youtube.com/results?search_query=revolucion+agricola+neolitica+septimo+historia+español" },
-            exercises: [
-              { q: "¿Qué es la Revolución Agrícola?", a: "Es el proceso por el que los humanos pasaron de cazar/recolectar a cultivar plantas y criar animales.", hint: "Fue una revolución porque cambió todo: donde vivían, cómo se organizaban, qué comían." },
-              { q: "¿Qué significa ser 'sedentario'?", a: "Quedarse a vivir en un lugar fijo en vez de moverse constantemente.", hint: "Opuesto a nómade. Hoy todos somos sedentarios." },
-              { q: "¿Por qué la agricultura permitió acumular bienes?", a: "Porque podían guardar alimentos para el futuro, creando excedentes que se podían intercambiar.", hint: "Si produces más de lo que comes, puedes guardarlo o comerciarlo." },
-              { q: "¿Cómo influyó la agricultura en el surgimiento de ciudades?", a: "Al quedarse en un lugar y tener excedentes, las comunidades crecieron y se organizaron en ciudades.", hint: "Sin agricultura no habría comida estable para mantener grandes grupos de personas en un lugar." },
-              { q: "¿Qué es la domesticación de animales?", a: "Es el proceso de criar y adaptar animales salvajes para que vivan y trabajen junto a los humanos.", hint: "Los perros, vacas y caballos fueron domesticados hace miles de años." },
-              { q: "¿Por qué el comercio surgió después de la agricultura?", a: "Porque los excedentes de comida permitían intercambiar lo que sobraba con otros grupos.", hint: "Si tienes mucho trigo y tu vecino tiene mucho pescado, pueden intercambiar." },
-              { q: "¿En qué regiones del mundo surgió la agricultura?", a: "En el Medio Oriente (Mesopotamia), China, India y América (México y Andes).", hint: "Surgió de forma independiente en varios lugares del mundo." },
-              { q: "¿Qué impacto tuvo la Revolución Agrícola en la organización social?", a: "Las sociedades se volvieron más complejas: aparecieron jefes, artesanos, sacerdotes y distintos roles.", hint: "Cuando hay excedente, no todos necesitan cazar; algunos pueden especializarse." },
-              { q: "¿Cómo cambió la relación con el medio ambiente con la agricultura?", a: "Los humanos empezaron a modificar el entorno: talaron bosques, irrigaron tierras y transformaron paisajes.", hint: "Para cultivar, necesitan limpiar terrenos y llevar agua a los campos." },
-              { q: "¿Qué relación hay entre la Revolución Agrícola y el presente?", a: "Hoy seguimos dependiendo de la agricultura y vivimos en ciudades, herencia directa de ese cambio.", hint: "Toda la civilización actual tiene sus raíces en ese primer paso de cultivar la tierra." },
-            ],
-          },
-          {
-            id: "grecia_roma",
-            name: "Grecia y Roma",
-            emoji: "🏛️",
-            tip: "Los griegos inventaron la democracia. Los romanos crearon las leyes que usamos hoy.",
-            explanation: `🇬🇷 GRECIA ANTIGUA:\n• Atenas inventó la democracia (pero solo votaban los ciudadanos hombres libres)\n• Los ciudadanos participaban en la política directamente\n\n🏛️ ROMA:\n• Primero fue una república, luego un Imperio\n• Crearon el Derecho Romano (base de las leyes actuales)\n• Construyeron caminos, acueductos y edificios en todo el Mediterráneo\n• Difundieron el cristianismo como religión oficial\n• Proceso de romanización: los pueblos conquistados adoptaban la cultura romana`,
-            video: { label: "📺 Grecia y Roma antigua", url: "https://www.youtube.com/results?search_query=grecia+antigua+democracia+roma+republica+septimo+historia+español" },
-            exercises: [
-              { q: "¿Qué es la democracia ateniense?", a: "Es el sistema de gobierno donde los ciudadanos participaban directamente en las decisiones políticas.", hint: "Demo = pueblo; cracia = gobierno. Gobierno del pueblo." },
-              { q: "¿Quiénes NO podían votar en la democracia ateniense?", a: "Las mujeres, los esclavos y los extranjeros (no ciudadanos).", hint: "Era una democracia muy limitada comparada con la actual." },
-              { q: "¿Qué es el Derecho Romano?", a: "Es el conjunto de leyes que crearon los romanos y que sirve de base para los sistemas legales actuales.", hint: "Muchas leyes de Chile y otros países tienen raíces en el Derecho Romano." },
-              { q: "¿Qué diferencia hay entre República e Imperio romano?", a: "En la República había instituciones compartidas; en el Imperio mandaba un solo César (emperador).", hint: "La República tuvo el Senado; el Imperio tuvo a Augusto, Julio César, etc." },
-              { q: "¿Qué es la romanización?", a: "Es el proceso por el que los pueblos conquistados adoptaron la lengua, costumbres y leyes romanas.", hint: "El español que hablamos hoy viene del latín romano. ¡Eso es romanización!" },
-              { q: "¿Qué infraestructura construyeron los romanos?", a: "Caminos, acueductos, puentes, anfiteatros (como el Coliseo) y ciudades.", hint: "Los caminos romanos conectaban todo el imperio para mover ejércitos y comercio." },
-              { q: "¿Cómo se expandió el Cristianismo en el Imperio Romano?", a: "Primero fue perseguido, luego el emperador Constantino lo legalizó y finalmente se convirtió en la religión oficial.", hint: "Los caminos romanos ayudaron a que el mensaje cristiano se difundiera rápido." },
-              { q: "¿Cuál era el papel del ejército romano?", a: "Conquistar nuevos territorios, defender las fronteras y mantener el orden en el imperio.", hint: "El ejército fue clave en la expansión del imperio por Europa, África y Asia." },
-              { q: "¿Qué legado griego existe en la política actual?", a: "La democracia, los debates públicos, el concepto de ciudadanía y los derechos.", hint: "Parlamentos, elecciones y la idea de ciudadano activo vienen de Grecia." },
-              { q: "¿Qué civilización estudiada tuvo mayor impacto en el derecho actual?", a: "Roma, con el Derecho Romano que sirvió de base para los sistemas legales de Occidente.", hint: "El Código Civil de Chile tiene raíces en el Derecho Romano." },
-            ],
-          },
-        ],
-      },
-      {
-        id: "ingles",
-        name: "Inglés",
-        emoji: "🇬🇧",
-        color: "#EF4444",
-        bg: "#FEF2F2",
-        accent: "#FEE2E2",
-        topics: [
-          {
-            id: "gramatica",
-            name: "Gramática Básica",
-            emoji: "✏️",
-            tip: "El inglés no es tan difícil si lo practicas un poco cada día.",
-            explanation: `Tiempos verbales clave:\n\n📌 Present Simple: acciones habituales\n"She plays tennis every week."\n\n📌 Past Simple: acciones terminadas en el pasado\n"I went to the park yesterday."\n\n📌 Past Continuous: acción en progreso interrumpida\n"I was studying when you called."\n\n📌 Must / Mustn't: obligación y prohibición\n"You must wear a seatbelt." / "You mustn't run here."`,
-            video: { label: "📺 Gramática inglés básico en español", url: "https://www.youtube.com/results?search_query=gramatica+ingles+basico+present+past+simple+español+facil" },
-            exercises: [
-              { q: "Completa: She _____ (play) football every Sunday.", a: "plays", hint: "Present Simple, 3a persona singular: agrega -s al verbo." },
-              { q: "Traduce: 'Yo fui al supermercado ayer.'", a: "I went to the supermarket yesterday.", hint: "'Go' en pasado es 'went' (verbo irregular)." },
-              { q: "Elige: 'You _____ smoke here.' (obligación de NO hacerlo)", a: "mustn't", hint: "Mustn't = prohibición. Must = obligación." },
-              { q: "¿Cuándo usas Past Continuous?", a: "Para describir una acción que estaba ocurriendo en el pasado cuando otra la interrumpió.", hint: "Ejemplo: I was sleeping when the alarm rang." },
-              { q: "Completa: I _____ studying when my friend arrived. (Past Continuous)", a: "was", hint: "Was / Were + verbo -ing = Past Continuous." },
-              { q: "Traduce: 'Ella estaba leyendo cuando sonó el teléfono.'", a: "She was reading when the phone rang.", hint: "Estaba leyendo = was reading (Past Continuous). Sonó = rang (Past Simple)." },
-              { q: "¿Cómo se forma el Past Simple de verbos regulares?", a: "Se agrega -ed al verbo base (walk → walked, play → played).", hint: "Regulares son fáciles: solo pon -ed al final." },
-              { q: "Escribe en inglés: 'Debes practicar todos los días.'", a: "You must practice every day.", hint: "Must = debes/tienes que." },
-              { q: "¿Qué significa: 'While I was cooking, the lights went out'?", a: "Mientras yo estaba cocinando, las luces se apagaron.", hint: "While + Past Continuous describe lo que pasaba; Past Simple lo que lo interrumpió." },
-              { q: "Elige la forma correcta: 'Does she cook? Yes, she ___.'", a: "does", hint: "En respuesta corta con Does, usa does/doesn't." },
-            ],
-          },
-          {
-            id: "vocabulario",
-            name: "Vocabulario Esencial",
-            emoji: "💬",
-            tip: "Aprende palabras en grupos temáticos: así las recuerdas mejor.",
-            explanation: `Grupos de vocabulario para el examen:\n\n😊 Emociones: happy, sad, angry, nervous, excited, bored, tired\n🏃 Deportes: football, tennis, basketball, swimming, skating\n🌿 Medio ambiente: pollution, recycling, global warming, wildfire\n🍎 Comida: fruits (apple, banana), vegetables (carrot, lettuce), healthy food\n\n📌 Conectores útiles:\nFirst → Primero | Then → Luego | Finally → Finalmente | Because → Porque`,
-            video: { label: "📺 Vocabulario en inglés para adolescentes", url: "https://www.youtube.com/results?search_query=vocabulario+ingles+adolescentes+septimo+basico+español" },
-            exercises: [
-              { q: "¿Cómo se dice 'contaminación' en inglés?", a: "Pollution", hint: "Viene de 'pollute' = contaminar." },
-              { q: "¿Qué significa 'nervous'?", a: "Nervioso/a", hint: "Lo sientes antes de dar un examen o hablar en público." },
-              { q: "¿Cómo se dice 'Primero... luego... finalmente' en inglés?", a: "First... then... finally", hint: "Son conectores de secuencia muy usados en writing." },
-              { q: "¿Qué es 'healthy food'?", a: "Comida saludable (frutas, verduras, cereales integrales).", hint: "Lo opuesto es 'junk food' = comida chatarra." },
-              { q: "¿Qué significa 'wildfire'?", a: "Incendio forestal / incendio fuera de control.", hint: "Wild = salvaje / fuera de control. Fire = fuego." },
-              { q: "¿Cómo dices 'Me gusta el skateboarding'?", a: "I like skateboarding.", hint: "Deportes en inglés generalmente van con -ing después de 'like'." },
-              { q: "¿Qué significa 'make friends'?", a: "Hacer amigos", hint: "Make + [sustantivo] = hacer algo. Make friends, make plans, make mistakes." },
-              { q: "¿Cómo describes alguien que está 'bored'?", a: "Alguien que está aburrido, sin interés en lo que está haciendo.", hint: "Bored = aburrido (por falta de estímulo). Boring = la cosa aburrida." },
-              { q: "¿Qué significa 'I'm fond of music'?", a: "Me gusta mucho la música / Soy fanático/a de la música.", hint: "Fond of = tener cariño por / ser aficionado a." },
-              { q: "¿Cómo dices en inglés: 'Porque quiero ser médico'?", a: "Because I want to be a doctor.", hint: "Because = porque. Want to = querer. Be = ser/estar." },
-            ],
-          },
-        ],
-      },
+      { id: "nb2", name: "8° Básico", emoji: "📘", color: "#10B981", bg: "#ECFDF5", accent: "#D1FAE5", coming: true, topics: [] },
+      { id: "nb3", name: "9° Básico", emoji: "📙", color: "#F59E0B", bg: "#FFFBEB", accent: "#FEF3C7", coming: true, topics: [] },
+      { id: "nm1", name: "1° Medio",  emoji: "📕", color: "#EF4444", bg: "#FEF2F2", accent: "#FEE2E2", coming: true, topics: [] },
+      { id: "nm2", name: "2° Medio",  emoji: "📓", color: "#8B5CF6", bg: "#F5F3FF", accent: "#EDE9FE", coming: true, topics: [] },
     ];
 
-    // ─── MAIN APP ─────────────────────────────────────────────────────────────
+        // ─── MAIN APP ─────────────────────────────────────────────────────────────
 
     function App() {
       const [screen, setScreen] = useState("home");
@@ -444,8 +210,8 @@
               <div style={{ maxWidth: 700, margin: "0 auto", display: "flex", alignItems: "center", gap: 14 }}>
                 <div style={{ fontSize: 40 }}>🚀</div>
                 <div>
-                  <h1 style={{ margin: 0, color: "#fff", fontSize: 24, fontFamily: "'Fredoka One', sans-serif", letterSpacing: 1 }}>Estudio 7° Básico</h1>
-                  <p style={{ margin: 0, color: "rgba(255,255,255,0.65)", fontSize: 13 }}>Aprende a tu ritmo · Sin apuro · Con ejemplos claros</p>
+                  <h1 style={{ margin: 0, color: "#fff", fontSize: 22, fontFamily: "'Fredoka One', sans-serif", letterSpacing: 1 }}>Exámenes Libres MINEDUC</h1>
+                  <p style={{ margin: 0, color: "rgba(255,255,255,0.65)", fontSize: 12 }}>Contenido oficial · Aprende a tu ritmo · Sin apuro</p>
                 </div>
                 <div style={{ marginLeft: "auto", background: "rgba(255,255,255,0.15)", borderRadius: 12, padding: "8px 14px", textAlign: "center" }}>
                   <div style={{ color: "#fbbf24", fontSize: 18, fontWeight: 900 }}>{totalDone}</div>
@@ -458,8 +224,8 @@
               <div style={{ background: "linear-gradient(135deg,#f59e0b,#ef4444)", borderRadius: 20, padding: "20px 24px", marginBottom: 28, display: "flex", alignItems: "center", gap: 16 }}>
                 <div style={{ fontSize: 48 }}>🌟</div>
                 <div>
-                  <h2 style={{ margin: "0 0 4px", color: "#fff", fontSize: 18, fontWeight: 900 }}>¡Hola! Puedes hacerlo 💪</h2>
-                  <p style={{ margin: 0, color: "rgba(255,255,255,0.88)", fontSize: 13, lineHeight: 1.5 }}>Cada ejercicio tiene explicación, pista y respuesta. <strong>Tómate el tiempo que necesites.</strong></p>
+                  <h2 style={{ margin: "0 0 4px", color: "#fff", fontSize: 18, fontWeight: 900 }}>¡Tú puedes lograrlo! 💪</h2>
+                  <p style={{ margin: 0, color: "rgba(255,255,255,0.88)", fontSize: 13, lineHeight: 1.5 }}>Ejercicios basados en el temario oficial del MINEDUC. Cada uno tiene explicación, pista y respuesta. <strong>A tu ritmo.</strong></p>
                 </div>
               </div>
 
@@ -473,11 +239,20 @@
                 </div>
               </div>
 
-              <h3 style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, letterSpacing: 2, textTransform: "uppercase", margin: "0 0 14px" }}>Elige una materia</h3>
+              <h3 style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, letterSpacing: 2, textTransform: "uppercase", margin: "0 0 14px" }}>Elige tu nivel</h3>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                 {SUBJECTS.map((s) => {
                   const done = s.topics.reduce((a, t) => a + (completed[`${s.id}_${t.id}`] || 0), 0);
                   const total = s.topics.reduce((a, t) => a + t.exercises.length, 0);
+                  if (s.coming) {
+                    return (
+                      <div key={s.id} style={{ background: "rgba(255,255,255,0.04)", border: "2px dashed rgba(255,255,255,0.15)", borderRadius: 18, padding: "20px 16px", textAlign: "left", opacity: 0.6 }}>
+                        <div style={{ fontSize: 36, marginBottom: 10 }}>{s.emoji}</div>
+                        <div style={{ fontWeight: 900, color: "#9CA3AF", fontSize: 15, marginBottom: 4 }}>{s.name}</div>
+                        <div style={{ fontSize: 11, color: "#6B7280", background: "rgba(251,191,36,0.15)", borderRadius: 8, padding: "4px 8px", display: "inline-block" }}>🚧 Próximamente</div>
+                      </div>
+                    );
+                  }
                   return (
                     <button key={s.id} onClick={() => { setSelectedSubject(s); setScreen("subject"); }}
                       style={{ background: s.bg, border: `2px solid ${s.accent}`, borderRadius: 18, padding: "20px 16px", cursor: "pointer", textAlign: "left", transition: "transform 0.15s,box-shadow 0.15s", boxShadow: "0 4px 20px rgba(0,0,0,0.2)" }}

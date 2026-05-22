@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estudio 7° Básico</title>
+  <meta name="description" content="Repasa Matemática, Lenguaje, Ciencias, Historia e Inglés para el examen libre de 7° básico." />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 0; background: #1e1b4b; }
+    #root { min-height: 100vh; }
+    /* Loading spinner */
+    #loading {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; color: #fbbf24;
+      font-family: 'Nunito', sans-serif; font-size: 18px; flex-direction: column; gap: 16px;
+    }
+    .spinner {
+      width: 48px; height: 48px; border: 5px solid rgba(251,191,36,0.2);
+      border-top-color: #fbbf24; border-radius: 50%; animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <div class="spinner"></div>
+    <span>Cargando app…</span>
+  </div>
+  <div id="root"></div>
+
+  <!-- React + ReactDOM (production) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Babel standalone para compilar JSX en el navegador -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel" data-presets="react">
+    const { useState, useEffect, useRef } = React;
+
+    // ─── DATA ────────────────────────────────────────────────────────────────
+
+    const SUBJECTS = [
+      {
+        id: "matematica",
+        name: "Matemática",
+        emoji: "🔢",
+        color: "#3B82F6",
+        bg: "#EFF6FF",
+        accent: "#DBEAFE",
+        topics: [
+          {
+            id: "enteros",
+            name: "Números Enteros",
+            emoji: "➕➖",
+            tip: "Los números enteros incluyen positivos, negativos y el cero.",
+            explanation: `Los números enteros son como una línea recta: a la derecha están los positivos (+1, +2, +3...) y a la izquierda los negativos (-1, -2, -3...). El cero está en el centro.\n\n🌡️ Ejemplo: Si hace 5°C y baja 8°, la temperatura queda en 5 - 8 = -3°C.`,
+            video: { label: "📺 Números enteros explicados", url: "https://www.youtube.com/results?search_query=numeros+enteros+septimo+basico+en+español" },
+            exercises: [
+              { q: "¿Cuánto es -3 + 7?", a: "4", hint: "Piensa en la recta numérica: empieza en -3 y avanza 7 pasos hacia la derecha." },
+              { q: "¿Cuánto es 5 - 9?", a: "-4", hint: "Empieza en 5 y retrocede 9 pasos. Llegas al negativo." },
+              { q: "En una mina, el ascensor baja 15 metros y luego sube 6 metros. ¿En qué nivel está?", a: "-9 metros", hint: "Primero anota la bajada como -15, luego suma +6." },
+              { q: "¿Cuál es el resultado de -4 + (-3)?", a: "-7", hint: "Dos negativos juntos se suman y el resultado es negativo." },
+              { q: "La temperatura era -2°C y subió 10°. ¿Cuál es la temperatura ahora?", a: "8°C", hint: "-2 + 10 = 8" },
+              { q: "¿Cuánto es -8 - (-3)?", a: "-5", hint: "Restar un negativo es igual a sumar: -8 + 3 = -5" },
+              { q: "Ordena de menor a mayor: 3, -5, 0, -1, 7", a: "-5, -1, 0, 3, 7", hint: "Los negativos van primero, de mayor valor absoluto a menor." },
+              { q: "¿Cuánto es (-6) + 6?", a: "0", hint: "Un número y su opuesto siempre suman cero." },
+              { q: "Si un buzo está a -12 metros y sube 5, ¿dónde queda?", a: "-7 metros", hint: "-12 + 5 = -7" },
+              { q: "¿Cuál es el opuesto de -15?", a: "15", hint: "El opuesto cambia el signo." },
+            ],
+          },
+          {
+            id: "porcentajes",
+            name: "Porcentajes",
+            emoji: "💯",
+            tip: "Porcentaje significa 'de cada 100'. El 50% es la mitad.",
+            explanation: `Un porcentaje es una parte de 100.\n\n📌 Trucos rápidos:\n• 10% → divide entre 10\n• 20% → divide entre 5\n• 25% → divide entre 4\n• 50% → divide entre 2\n\n🛒 Ejemplo: Un producto vale $10.000 y tiene 20% de descuento:\n10.000 ÷ 5 = $2.000 de descuento → pagas $8.000`,
+            video: { label: "📺 Porcentajes fácil y rápido", url: "https://www.youtube.com/results?search_query=porcentajes+septimo+basico+facil+español" },
+            exercises: [
+              { q: "¿Cuánto es el 10% de $50.000?", a: "$5.000", hint: "Divide entre 10: 50.000 ÷ 10 = 5.000" },
+              { q: "¿Cuánto es el 50% de 200?", a: "100", hint: "El 50% es la mitad: 200 ÷ 2 = 100" },
+              { q: "Un producto vale $30.000 con 25% de descuento. ¿Cuánto se descuenta?", a: "$7.500", hint: "25% = ÷4: 30.000 ÷ 4 = 7.500" },
+              { q: "¿Cuánto es el 20% de 150?", a: "30", hint: "20% = ÷5: 150 ÷ 5 = 30" },
+              { q: "Si un libro cuesta $8.000 y hay 10% de IVA, ¿cuánto pagas?", a: "$8.800", hint: "10% de 8.000 = 800. Sumas: 8.000 + 800 = 8.800" },
+              { q: "¿Qué porcentaje representa 25 de 100?", a: "25%", hint: "25 de cada 100 = 25%" },
+              { q: "¿Cuánto es el 75% de 80?", a: "60", hint: "75% = 3/4 del número. 80 ÷ 4 × 3 = 60" },
+              { q: "En una clase de 40 alumnos, el 25% usa anteojos. ¿Cuántos son?", a: "10 alumnos", hint: "25% de 40 = 40 ÷ 4 = 10" },
+              { q: "¿Cuánto es el 15% de $20.000?", a: "$3.000", hint: "10% = 2.000 y 5% = 1.000. Sumalos: 3.000" },
+              { q: "Si una camisa cuesta $15.000 y tiene 20% de descuento, ¿cuánto pagas?", a: "$12.000", hint: "20% de 15.000 = 3.000. 15.000 - 3.000 = 12.000" },
+            ],
+          },
+          {
+            id: "algebra",
+            name: "Álgebra Básica",
+            emoji: "🔡",
+            tip: "La x es como una caja misteriosa. Tu trabajo es descubrir qué hay dentro.",
+            explanation: `El álgebra usa letras (como x o n) para representar números desconocidos.\n\n🔑 Para resolver una ecuación, debes "despejar la x":\n\nEjemplo: x + 5 = 12\n→ Resto 5 en ambos lados: x = 12 - 5 = 7\n\nRegla de oro: Lo que haces a un lado, lo haces al otro.`,
+            video: { label: "📺 Introducción al álgebra", url: "https://www.youtube.com/results?search_query=algebra+basica+septimo+basico+ecuaciones+español" },
+            exercises: [
+              { q: "Resuelve: x + 6 = 14", a: "x = 8", hint: "Resta 6 en ambos lados: x = 14 - 6" },
+              { q: "Resuelve: x - 3 = 10", a: "x = 13", hint: "Suma 3 en ambos lados: x = 10 + 3" },
+              { q: "Resuelve: 2x = 18", a: "x = 9", hint: "Divide ambos lados entre 2: x = 18 ÷ 2" },
+              { q: "Resuelve: x/4 = 5", a: "x = 20", hint: "Multiplica ambos lados por 4: x = 5 × 4" },
+              { q: "Si el doble de un número es 30, ¿cuál es el número?", a: "15", hint: "2x = 30 → x = 15" },
+              { q: "Escribe en álgebra: 'tres veces un número menos 2'", a: "3x - 2", hint: "'tres veces' = 3x, 'menos 2' = -2" },
+              { q: "Resuelve: 3x + 1 = 10", a: "x = 3", hint: "Primero resta 1: 3x = 9. Luego divide entre 3." },
+              { q: "Si la mitad de un número más 3 es igual a 8, ¿cuál es el número?", a: "10", hint: "x/2 + 3 = 8 → x/2 = 5 → x = 10" },
+              { q: "Resuelve: 5x - 5 = 20", a: "x = 5", hint: "Suma 5: 5x = 25. Divide entre 5: x = 5" },
+              { q: "¿Qué expresión algebraica representa 'el triple de x más 4'?", a: "3x + 4", hint: "Triple = ×3, más 4 = +4" },
+            ],
+          },
+          {
+            id: "circulo",
+            name: "El Círculo",
+            emoji: "⭕",
+            tip: "π (pi) es aproximadamente 3,14. Es el número mágico del círculo.",
+            explanation: `Partes del círculo:\n• Radio (r): del centro al borde\n• Diámetro (d): de un lado al otro (d = 2r)\n• Circunferencia (perímetro): P = π × d\n• Área: A = π × r²  (con π ≈ 3,14)\n\n🍕 Ejemplo: Un círculo de radio 5 cm:\nPerímetro = 3,14 × 10 = 31,4 cm\nÁrea = 3,14 × 25 = 78,5 cm²`,
+            video: { label: "📺 Área y perímetro del círculo", url: "https://www.youtube.com/results?search_query=area+perimetro+circulo+septimo+basico+español" },
+            exercises: [
+              { q: "¿Cuál es el diámetro de un círculo con radio 7 cm?", a: "14 cm", hint: "d = 2 × r = 2 × 7 = 14" },
+              { q: "¿Cuál es el radio si el diámetro es 20 cm?", a: "10 cm", hint: "r = d ÷ 2 = 20 ÷ 2 = 10" },
+              { q: "Calcula el perímetro de un círculo con diámetro 10 cm (π ≈ 3,14)", a: "31,4 cm", hint: "P = π × d = 3,14 × 10 = 31,4" },
+              { q: "Calcula el área de un círculo con radio 3 cm (π ≈ 3,14)", a: "28,26 cm²", hint: "A = π × r² = 3,14 × 9 = 28,26" },
+              { q: "Un círculo tiene radio 6. ¿Cuál es su área?", a: "113,04 cm²", hint: "A = 3,14 × 6² = 3,14 × 36 = 113,04" },
+              { q: "¿Cuál es el perímetro de un círculo con radio 5 cm?", a: "31,4 cm", hint: "Primero d = 10, luego P = 3,14 × 10" },
+              { q: "Una piscina circular tiene 8 metros de diámetro. ¿Cuánto mide su borde?", a: "25,12 metros", hint: "P = 3,14 × 8 = 25,12" },
+              { q: "¿Cuánto es π × r² si r = 1?", a: "3,14", hint: "r² = 1, entonces A = 3,14 × 1 = 3,14" },
+              { q: "Un círculo tiene diámetro 14 cm. ¿Cuál es su radio?", a: "7 cm", hint: "r = d ÷ 2" },
+              { q: "¿Cuál es el área de un círculo con diámetro 10 cm?", a: "78,5 cm²", hint: "Primero r = 5, luego A = 3,14 × 25 = 78,5" },
+            ],
+          },
+        ],
+      },
+      {
+        id: "lenguaje",
+        name: "Lengua y Literatura",
+        emoji: "📖",
+        color: "#8B5CF6",
+        bg: "#F5F3FF",
+        accent: "#EDE9FE",
+        topics: [
+          {
+            id: "narracion",
+            name: "Análisis Narrativo",
+            emoji: "📚",
+            tip: "Todo cuento tiene un inicio, un conflicto y un desenlace.",
+            explanation: `Al analizar una narración debes fijarte en:\n\n👤 Personajes: ¿Quién es el protagonista? ¿El antagonista?\n⚔️ Conflicto: ¿Cuál es el problema principal?\n📖 Narrador: ¿Quién cuenta la historia? ¿Es un personaje o alguien externo?\n🕐 Tiempo: ¿Los hechos van en orden o hay saltos?\n🎭 Desenlace: ¿Cómo termina todo?`,
+            video: { label: "📺 Cómo analizar un cuento", url: "https://www.youtube.com/results?search_query=analisis+narrativo+septimo+basico+narrador+personajes+español" },
+            exercises: [
+              { q: "¿Qué es el conflicto en una narración?", a: "Es el problema o situación que enfrenta el protagonista y que mueve la historia.", hint: "Sin conflicto no hay historia. Piensa en qué problema tiene que resolver el personaje." },
+              { q: "¿Qué diferencia hay entre narrador y personaje?", a: "El narrador cuenta la historia; los personajes viven la historia.", hint: "El narrador puede ser externo (no participa) o interno (es un personaje)." },
+              { q: "¿Qué es un narrador en primera persona?", a: "Es cuando el que cuenta la historia usa 'yo' y es parte de los hechos.", hint: "Ejemplo: 'Yo vi todo lo que pasó esa noche...'" },
+              { q: "¿Qué significa que los hechos tienen 'orden cronológico'?", a: "Que los eventos se narran en el orden en que ocurrieron, del primero al último.", hint: "Cronológico = en orden de tiempo." },
+              { q: "¿Qué es un flashback en una historia?", a: "Es cuando la narración retrocede en el tiempo para contar algo que ocurrió antes.", hint: "En películas lo verás como 'recuerdo del pasado'." },
+              { q: "¿Cuál es la diferencia entre protagonista y antagonista?", a: "El protagonista es el personaje principal; el antagonista se opone a él.", hint: "En clásicos: héroe vs villano." },
+              { q: "Lee esto y responde: 'Juan corrió al hospital porque su madre estaba enferma.' ¿Cuál es el conflicto?", a: "La madre enferma que lleva a Juan a actuar con urgencia.", hint: "¿Qué problema motiva la acción del personaje?" },
+              { q: "¿Qué es el desenlace de una historia?", a: "Es la parte final donde se resuelve el conflicto.", hint: "Es cuando todo termina y sabes cómo quedó la situación." },
+              { q: "¿Qué información necesitas para describir a un personaje?", a: "Su apariencia, personalidad, papel en la historia y cómo afecta a otros.", hint: "Piensa en cómo es, qué hace y cómo cambia la historia." },
+              { q: "¿Qué son 'elementos en común' entre dos textos?", a: "Aspectos que se repiten, como el tema, el tipo de narrador o el tipo de personajes.", hint: "Compara temas, estilos o tipos de personajes entre cuentos." },
+            ],
+          },
+          {
+            id: "poesia",
+            name: "Análisis de Poesía",
+            emoji: "🌸",
+            tip: "La poesía habla con imágenes y sonidos, no solo con palabras.",
+            explanation: `La poesía usa un lenguaje especial:\n\n🖼️ Imágenes: descripciones que apelan a los sentidos\n🎭 Figuras retóricas: metáfora, personificación, comparación\n🎵 Ritmo y sonoridad: cómo suena al leerlo en voz alta\n😊 Estado de ánimo: la emoción que transmite el poema\n\nEjemplo de metáfora: 'Tus ojos son estrellas' (no son literalmente estrellas, pero brillan igual).`,
+            video: { label: "📺 Figuras literarias explicadas", url: "https://www.youtube.com/results?search_query=figuras+literarias+poesia+septimo+basico+metafora+español" },
+            exercises: [
+              { q: "¿Qué es una metáfora?", a: "Es comparar dos cosas diciendo que una ES la otra, sin usar 'como'.", hint: "Ejemplo: 'La vida es un viaje'." },
+              { q: "¿Qué es una comparación o símil?", a: "Es comparar dos cosas usando 'como' o 'parece'.", hint: "Ejemplo: 'Eres fuerte como un roble'." },
+              { q: "¿Qué es la personificación?", a: "Es darle características humanas a objetos o animales.", hint: "Ejemplo: 'El sol nos sonrió todo el día'." },
+              { q: "¿Qué significa que un poema apela a los sentidos?", a: "Que usa palabras que nos hacen ver, oler, oír, tocar o saborear algo.", hint: "Busca en el poema palabras relacionadas con los 5 sentidos." },
+              { q: "¿Qué es el ritmo en un poema?", a: "Es la musicalidad que se produce por la repetición de sonidos y sílabas al leerlo.", hint: "Léelo en voz alta y sentirás el ritmo como en una canción." },
+              { q: "Identifica la figura literaria: 'Tus palabras son cuchillos'", a: "Metáfora (se compara sin usar 'como').", hint: "¿Se usa 'como' o 'parece'? No → es metáfora." },
+              { q: "¿Qué es el estado de ánimo en un poema?", a: "Es la emoción o sentimiento que transmite el poema al leerlo.", hint: "Puede ser alegría, tristeza, nostalgia, amor, etc." },
+              { q: "Identifica la figura literaria: 'El viento susurró mi nombre'", a: "Personificación (el viento hace algo humano: susurrar).", hint: "¿Le das características humanas a algo que no es humano?" },
+              { q: "¿Para qué sirve la rima en un poema?", a: "Para crear musicalidad, ritmo y hacerlo más fácil de recordar.", hint: "Piensa en canciones: riman para quedarse en la mente." },
+              { q: "¿Qué es interpretar un poema?", a: "Es explicar qué significa el poema basándose en el lenguaje figurado y tu experiencia.", hint: "No hay una sola respuesta. Tu interpretación importa." },
+            ],
+          },
+          {
+            id: "argumentacion",
+            name: "Textos Argumentativos",
+            emoji: "🗣️",
+            tip: "Un argumento tiene una opinión + una razón que la sustenta.",
+            explanation: `Los textos argumentativos buscan convencer.\n\nPartes:\n📌 Tesis: la opinión del autor\n📣 Argumentos: las razones que la apoyan\n📋 Conclusión: el cierre\n\n🔍 Hecho vs Opinión:\n• Hecho: "El 60% de los jóvenes usa redes sociales" (comprobable)\n• Opinión: "Las redes sociales son dañinas para los jóvenes" (debatible)`,
+            video: { label: "📺 Texto argumentativo: cómo identificarlo", url: "https://www.youtube.com/results?search_query=texto+argumentativo+hechos+opiniones+septimo+basico+español" },
+            exercises: [
+              { q: "¿Qué es la tesis en un texto argumentativo?", a: "Es la postura u opinión principal que el autor defiende.", hint: "Busca la idea central que el autor quiere que aceptes." },
+              { q: "¿Qué diferencia hay entre un hecho y una opinión?", a: "Un hecho es comprobable y objetivo; una opinión es subjetiva y debatible.", hint: "Si puedes medirlo o verificarlo, es un hecho. Si depende del punto de vista, es opinión." },
+              { q: "Clasifica: 'Chile tiene más de 19 millones de habitantes.'", a: "Hecho (es verificable con datos oficiales).", hint: "¿Se puede comprobar con datos? Sí → Hecho." },
+              { q: "Clasifica: 'La tecnología hace que los jóvenes sean menos sociables.'", a: "Opinión (es debatible y depende del punto de vista).", hint: "¿Todo el mundo estaría de acuerdo? No → Opinión." },
+              { q: "¿Qué es un argumento?", a: "Es una razón que el autor usa para apoyar su postura.", hint: "Los argumentos responden a la pregunta '¿por qué?' después de la tesis." },
+              { q: "¿Para qué sirven las cartas al director en un diario?", a: "Para que personas expresen su opinión sobre un tema de actualidad.", hint: "Son textos argumentativos del público general." },
+              { q: "¿Qué es un estereotipo en los medios?", a: "Es una imagen o idea simplificada y generalizada sobre un grupo de personas.", hint: "Ejemplo: 'Todos los jóvenes son irresponsables'." },
+              { q: "¿Por qué es importante distinguir hechos de opiniones al leer noticias?", a: "Para no ser manipulado y poder analizar la información críticamente.", hint: "Si confundes opinión con hecho, podrías creer cosas falsas." },
+              { q: "¿Qué es el propósito implícito de un texto?", a: "Es la intención real del autor que no está escrita directamente, pero se puede deducir.", hint: "Pregúntate: '¿Qué quiere que yo haga o piense después de leer esto?'" },
+              { q: "¿Qué elementos tiene una columna de opinión?", a: "Tiene una tesis, argumentos que la apoyan y una conclusión que cierra el texto.", hint: "Es como un mini ensayo con postura clara." },
+            ],
+          },
+        ],
+      },
+      {
+        id: "ciencias",
+        name: "Ciencias Naturales",
+        emoji: "🔬",
+        color: "#10B981",
+        bg: "#ECFDF5",
+        accent: "#D1FAE5",
+        topics: [
+          {
+            id: "fuerzas",
+            name: "Fuerzas",
+            emoji: "⚡",
+            tip: "Las fuerzas son empujones o jalones que cambian el movimiento de los objetos.",
+            explanation: `Tipos de fuerza que debes conocer:\n\n🍎 Gravedad: atrae todo hacia el centro de la Tierra\n🛑 Roce/Fricción: frena el movimiento (estática, cinética y con el aire)\n🌀 Elástica: la de los resortes y elásticos\n\n📌 Curiosidad: cuando caminas, el roce entre tus zapatos y el suelo te impide resbalar. ¡Sin fricción no podrías moverte!`,
+            video: { label: "📺 Tipos de fuerza: gravedad y roce", url: "https://www.youtube.com/results?search_query=fuerzas+gravedad+roce+elastica+septimo+basico+ciencias+español" },
+            exercises: [
+              { q: "¿Qué es la fuerza gravitacional?", a: "Es la fuerza que atrae los objetos hacia el centro de la Tierra.", hint: "Por eso los objetos caen cuando los sueltas." },
+              { q: "¿Qué diferencia hay entre fuerza de roce estática y cinética?", a: "La estática evita que un objeto empiece a moverse; la cinética frena un objeto que ya se mueve.", hint: "Estática = antes de moverse. Cinética = mientras se mueve." },
+              { q: "¿Por qué un paracaidista cae más lento que una piedra?", a: "Porque tiene mayor roce con el aire (resistencia del aire) que lo desacelera.", hint: "El paracaídas aumenta la superficie y, por ende, el roce con el aire." },
+              { q: "¿De qué depende la fuerza de roce?", a: "Del tipo de superficie y del peso del objeto.", hint: "Más rugosa la superficie = más roce. Más pesado = más roce." },
+              { q: "¿Qué pasa con un resorte cuando se le aplica fuerza?", a: "Se estira o comprime, y luego vuelve a su forma original (fuerza elástica).", hint: "Los resortes guardan energía cuando los deformas." },
+              { q: "¿Por qué los astronautas flotan en el espacio?", a: "Porque fuera de la atmósfera no hay gravedad significativa actuando sobre ellos.", hint: "La gravedad disminuye con la distancia a la Tierra." },
+              { q: "¿Qué es una fuerza?", a: "Es un empuje o jalón que puede mover, frenar o deformar un objeto.", hint: "Piensa en cuándo empujas una puerta o jalar un cajón." },
+              { q: "¿Por qué un auto frena cuando pisas el freno?", a: "Porque los frenos generan roce entre las pastillas y los discos, frenando las ruedas.", hint: "Es un ejemplo de fuerza de roce cinética." },
+              { q: "¿Qué fuerza está actuando cuando una pelota sube y luego baja?", a: "La gravedad: primero frena la pelota y luego la jala hacia abajo.", hint: "La gravedad actúa siempre, incluso cuando la pelota va hacia arriba." },
+              { q: "¿Qué ocurre si sueltas una pluma y una piedra al mismo tiempo (sin viento)?", a: "En teoría caen igual de rápido; en la práctica la pluma cae más lento por el roce del aire.", hint: "Galileo demostró que sin aire, caen juntas." },
+            ],
+          },
+          {
+            id: "tectonica",
+            name: "Tectónica de Placas",
+            emoji: "🌍",
+            tip: "Chile es sísmico por estar entre la placa de Nazca y la Sudamericana.",
+            explanation: `La Tierra está cubierta de placas tectónicas (como piezas de un rompecabezas gigante) que se mueven lentamente.\n\nTipos de movimiento:\n🔴 Convergente: las placas chocan (forman montañas o fosas)\n🔵 Divergente: las placas se separan (forman océanos nuevos)\n🟡 Transformante: las placas se deslizan una al lado de la otra (causa terremotos)\n\n🇨🇱 Chile tiene terremotos por el choque entre la Placa de Nazca y la Sudamericana.`,
+            video: { label: "📺 Tectónica de placas y sismos", url: "https://www.youtube.com/results?search_query=tectonica+placas+sismos+volcanes+septimo+basico+español" },
+            exercises: [
+              { q: "¿Qué son las placas tectónicas?", a: "Son grandes fragmentos de la corteza terrestre que se mueven lentamente sobre el manto.", hint: "Imagina la Tierra como un huevo duro con la cáscara fracturada en piezas." },
+              { q: "¿Qué ocurre en un límite convergente?", a: "Dos placas chocan: una puede subir y la otra hundir, formando montañas o fosas.", hint: "Los Andes nacieron por un límite convergente." },
+              { q: "¿Qué ocurre en un límite divergente?", a: "Las placas se separan, dejando salir magma que forma nueva corteza oceánica.", hint: "El océano Atlántico crece cada año por esto." },
+              { q: "¿Por qué Chile tiene tantos terremotos?", a: "Porque está en el límite convergente entre la Placa de Nazca y la Placa Sudamericana.", hint: "Estas dos placas chocan constantemente bajo Chile." },
+              { q: "¿Qué es la deriva continental?", a: "Es la teoría de que los continentes estuvieron unidos (Pangea) y se fueron separando con el tiempo.", hint: "Mira cómo África y América del Sur parecen encajar como piezas de puzzle." },
+              { q: "¿Qué produce el movimiento de las placas?", a: "Las corrientes convectivas del manto terrestre (calor que sube y baja como en una olla).", hint: "El calor interno de la Tierra mueve el material del manto, que arrastra las placas." },
+              { q: "¿Cómo se relacionan las placas tectónicas con los volcanes?", a: "En los bordes de placas convergentes, la placa que se hunde genera magma que puede salir como volcán.", hint: "El Cinturón de Fuego del Pacífico es la zona con más volcanes del mundo." },
+              { q: "¿Qué es un sismo o terremoto?", a: "Es la vibración del suelo causada por el movimiento brusco de las placas tectónicas.", hint: "La energía acumulada se libera de golpe, haciendo temblar la tierra." },
+              { q: "¿Qué tipo de límite tienen las placas cuando se deslizan una junto a la otra?", a: "Límite transformante.", hint: "No chocan ni se separan, solo se rozan lateralmente." },
+              { q: "Nombra las placas tectónicas que afectan directamente a Chile.", a: "La Placa de Nazca, la Placa Sudamericana y la Placa Antártica.", hint: "Chile está en una zona de convergencia de tres placas." },
+            ],
+          },
+          {
+            id: "materia",
+            name: "Materia y Mezclas",
+            emoji: "⚗️",
+            tip: "Todo lo que nos rodea está hecho de materia: puede ser pura o mezclada.",
+            explanation: `La materia puede ser:\n\n🟦 Sustancia pura: tiene composición fija (ej: agua pura, oro)\n🟩 Mezcla homogénea: parece uniforme, no distingues las partes (ej: agua con sal)\n🟥 Mezcla heterogénea: puedes ver las partes distintas (ej: ensalada, arena con piedras)\n\nPara separar mezclas usamos:\n• Decantación: líquido + líquido que no se mezclan\n• Filtración: sólido + líquido\n• Tamizado: sólidos de distintos tamaños\n• Destilación: líquidos con distintos puntos de ebullición`,
+            video: { label: "📺 Mezclas y métodos de separación", url: "https://www.youtube.com/results?search_query=mezclas+homogeneas+heterogeneas+separacion+septimo+basico+español" },
+            exercises: [
+              { q: "¿Qué diferencia hay entre una mezcla homogénea y una heterogénea?", a: "En la homogénea no distingues sus componentes a simple vista; en la heterogénea sí.", hint: "Agua con azúcar = homogénea. Ensalada = heterogénea." },
+              { q: "¿Qué método usarías para separar arena de agua?", a: "Filtración (pasas el líquido por un filtro que retiene los sólidos).", hint: "La arena es sólida, el agua es líquida. Un filtro los puede separar." },
+              { q: "¿Cómo funciona la decantación?", a: "Se deja reposar la mezcla y el líquido más denso se separa del más liviano.", hint: "El aceite flota sobre el agua. Eso es decantación en acción." },
+              { q: "¿Para qué sirve la destilación?", a: "Para separar líquidos que tienen distintos puntos de ebullición, evaporando uno primero.", hint: "El agua hierve a 100°C; el alcohol a menos. Así se separan." },
+              { q: "¿Es el agua del mar una sustancia pura o una mezcla?", a: "Es una mezcla (agua + sal + minerales).", hint: "Si contiene sal disuelta, ya no es agua pura." },
+              { q: "¿Cómo se separa arena fina de grava gruesa?", a: "Con tamizado (se pasa por una malla que deja pasar lo más fino).", hint: "La malla deja pasar los granos pequeños y retiene los grandes." },
+              { q: "¿El oro es una sustancia pura o mezcla?", a: "Es una sustancia pura (elemento químico).", hint: "El oro tiene una composición fija y uniforme." },
+              { q: "¿Qué método se usa para purificar el agua potable?", a: "Principalmente filtración y en algunos pasos también destilación.", hint: "El tratamiento del agua usa filtros para eliminar sólidos y gérmenes." },
+              { q: "Clasifica: jugo de naranja natural con pulpa.", a: "Mezcla heterogénea (puedes ver la pulpa separada del líquido).", hint: "¿Puedes ver partes diferentes? Sí → heterogénea." },
+              { q: "¿En qué procesos industriales se aplica la separación de mezclas?", a: "En minería (separar minerales), metalurgia y tratamiento de aguas servidas.", hint: "La industria usa estos métodos a gran escala para separar materiales útiles." },
+            ],
+          },
+        ],
+      },
+      {
+        id: "historia",
+        name: "Historia y Geografía",
+        emoji: "🏛️",
+        color: "#F59E0B",
+        bg: "#FFFBEB",
+        accent: "#FEF3C7",
+        topics: [
+          {
+            id: "revolucion_agricola",
+            name: "Revolución Agrícola",
+            emoji: "🌾",
+            tip: "La agricultura cambió todo: de nómades pasamos a vivir en ciudades.",
+            explanation: `Antes de la agricultura, las personas eran nómades: cazaban y recolectaban comida moviéndose de lugar en lugar.\n\nCon la Revolución Agrícola (hace ~10.000 años):\n🌱 Se empezó a cultivar plantas\n🐄 Se domesticaron animales\n🏠 Las personas se volvieron sedentarias (se quedaron en un lugar)\n📦 Se acumularon bienes (comida guardada = riqueza)\n🤝 Se desarrolló el comercio\n\n🌍 Surgió en distintos lugares del mundo al mismo tiempo: Medio Oriente, China, América.`,
+            video: { label: "📺 Revolución Neolítica y agricultura", url: "https://www.youtube.com/results?search_query=revolucion+agricola+neolitica+septimo+historia+español" },
+            exercises: [
+              { q: "¿Qué es la Revolución Agrícola?", a: "Es el proceso por el que los humanos pasaron de cazar/recolectar a cultivar plantas y criar animales.", hint: "Fue una revolución porque cambió todo: donde vivían, cómo se organizaban, qué comían." },
+              { q: "¿Qué significa ser 'sedentario'?", a: "Quedarse a vivir en un lugar fijo en vez de moverse constantemente.", hint: "Opuesto a nómade. Hoy todos somos sedentarios." },
+              { q: "¿Por qué la agricultura permitió acumular bienes?", a: "Porque podían guardar alimentos para el futuro, creando excedentes que se podían intercambiar.", hint: "Si produces más de lo que comes, puedes guardarlo o comerciarlo." },
+              { q: "¿Cómo influyó la agricultura en el surgimiento de ciudades?", a: "Al quedarse en un lugar y tener excedentes, las comunidades crecieron y se organizaron en ciudades.", hint: "Sin agricultura no habría comida estable para mantener grandes grupos de personas en un lugar." },
+              { q: "¿Qué es la domesticación de animales?", a: "Es el proceso de criar y adaptar animales salvajes para que vivan y trabajen junto a los humanos.", hint: "Los perros, vacas y caballos fueron domesticados hace miles de años." },
+              { q: "¿Por qué el comercio surgió después de la agricultura?", a: "Porque los excedentes de comida permitían intercambiar lo que sobraba con otros grupos.", hint: "Si tienes mucho trigo y tu vecino tiene mucho pescado, pueden intercambiar." },
+              { q: "¿En qué regiones del mundo surgió la agricultura?", a: "En el Medio Oriente (Mesopotamia), China, India y América (México y Andes).", hint: "Surgió de forma independiente en varios lugares del mundo." },
+              { q: "¿Qué impacto tuvo la Revolución Agrícola en la organización social?", a: "Las sociedades se volvieron más complejas: aparecieron jefes, artesanos, sacerdotes y distintos roles.", hint: "Cuando hay excedente, no todos necesitan cazar; algunos pueden especializarse." },
+              { q: "¿Cómo cambió la relación con el medio ambiente con la agricultura?", a: "Los humanos empezaron a modificar el entorno: talaron bosques, irrigaron tierras y transformaron paisajes.", hint: "Para cultivar, necesitan limpiar terrenos y llevar agua a los campos." },
+              { q: "¿Qué relación hay entre la Revolución Agrícola y el presente?", a: "Hoy seguimos dependiendo de la agricultura y vivimos en ciudades, herencia directa de ese cambio.", hint: "Toda la civilización actual tiene sus raíces en ese primer paso de cultivar la tierra." },
+            ],
+          },
+          {
+            id: "grecia_roma",
+            name: "Grecia y Roma",
+            emoji: "🏛️",
+            tip: "Los griegos inventaron la democracia. Los romanos crearon las leyes que usamos hoy.",
+            explanation: `🇬🇷 GRECIA ANTIGUA:\n• Atenas inventó la democracia (pero solo votaban los ciudadanos hombres libres)\n• Los ciudadanos participaban en la política directamente\n\n🏛️ ROMA:\n• Primero fue una república, luego un Imperio\n• Crearon el Derecho Romano (base de las leyes actuales)\n• Construyeron caminos, acueductos y edificios en todo el Mediterráneo\n• Difundieron el cristianismo como religión oficial\n• Proceso de romanización: los pueblos conquistados adoptaban la cultura romana`,
+            video: { label: "📺 Grecia y Roma antigua", url: "https://www.youtube.com/results?search_query=grecia+antigua+democracia+roma+republica+septimo+historia+español" },
+            exercises: [
+              { q: "¿Qué es la democracia ateniense?", a: "Es el sistema de gobierno donde los ciudadanos participaban directamente en las decisiones políticas.", hint: "Demo = pueblo; cracia = gobierno. Gobierno del pueblo." },
+              { q: "¿Quiénes NO podían votar en la democracia ateniense?", a: "Las mujeres, los esclavos y los extranjeros (no ciudadanos).", hint: "Era una democracia muy limitada comparada con la actual." },
+              { q: "¿Qué es el Derecho Romano?", a: "Es el conjunto de leyes que crearon los romanos y que sirve de base para los sistemas legales actuales.", hint: "Muchas leyes de Chile y otros países tienen raíces en el Derecho Romano." },
+              { q: "¿Qué diferencia hay entre República e Imperio romano?", a: "En la República había instituciones compartidas; en el Imperio mandaba un solo César (emperador).", hint: "La República tuvo el Senado; el Imperio tuvo a Augusto, Julio César, etc." },
+              { q: "¿Qué es la romanización?", a: "Es el proceso por el que los pueblos conquistados adoptaron la lengua, costumbres y leyes romanas.", hint: "El español que hablamos hoy viene del latín romano. ¡Eso es romanización!" },
+              { q: "¿Qué infraestructura construyeron los romanos?", a: "Caminos, acueductos, puentes, anfiteatros (como el Coliseo) y ciudades.", hint: "Los caminos romanos conectaban todo el imperio para mover ejércitos y comercio." },
+              { q: "¿Cómo se expandió el Cristianismo en el Imperio Romano?", a: "Primero fue perseguido, luego el emperador Constantino lo legalizó y finalmente se convirtió en la religión oficial.", hint: "Los caminos romanos ayudaron a que el mensaje cristiano se difundiera rápido." },
+              { q: "¿Cuál era el papel del ejército romano?", a: "Conquistar nuevos territorios, defender las fronteras y mantener el orden en el imperio.", hint: "El ejército fue clave en la expansión del imperio por Europa, África y Asia." },
+              { q: "¿Qué legado griego existe en la política actual?", a: "La democracia, los debates públicos, el concepto de ciudadanía y los derechos.", hint: "Parlamentos, elecciones y la idea de ciudadano activo vienen de Grecia." },
+              { q: "¿Qué civilización estudiada tuvo mayor impacto en el derecho actual?", a: "Roma, con el Derecho Romano que sirvió de base para los sistemas legales de Occidente.", hint: "El Código Civil de Chile tiene raíces en el Derecho Romano." },
+            ],
+          },
+        ],
+      },
+      {
+        id: "ingles",
+        name: "Inglés",
+        emoji: "🇬🇧",
+        color: "#EF4444",
+        bg: "#FEF2F2",
+        accent: "#FEE2E2",
+        topics: [
+          {
+            id: "gramatica",
+            name: "Gramática Básica",
+            emoji: "✏️",
+            tip: "El inglés no es tan difícil si lo practicas un poco cada día.",
+            explanation: `Tiempos verbales clave:\n\n📌 Present Simple: acciones habituales\n"She plays tennis every week."\n\n📌 Past Simple: acciones terminadas en el pasado\n"I went to the park yesterday."\n\n📌 Past Continuous: acción en progreso interrumpida\n"I was studying when you called."\n\n📌 Must / Mustn't: obligación y prohibición\n"You must wear a seatbelt." / "You mustn't run here."`,
+            video: { label: "📺 Gramática inglés básico en español", url: "https://www.youtube.com/results?search_query=gramatica+ingles+basico+present+past+simple+español+facil" },
+            exercises: [
+              { q: "Completa: She _____ (play) football every Sunday.", a: "plays", hint: "Present Simple, 3a persona singular: agrega -s al verbo." },
+              { q: "Traduce: 'Yo fui al supermercado ayer.'", a: "I went to the supermarket yesterday.", hint: "'Go' en pasado es 'went' (verbo irregular)." },
+              { q: "Elige: 'You _____ smoke here.' (obligación de NO hacerlo)", a: "mustn't", hint: "Mustn't = prohibición. Must = obligación." },
+              { q: "¿Cuándo usas Past Continuous?", a: "Para describir una acción que estaba ocurriendo en el pasado cuando otra la interrumpió.", hint: "Ejemplo: I was sleeping when the alarm rang." },
+              { q: "Completa: I _____ studying when my friend arrived. (Past Continuous)", a: "was", hint: "Was / Were + verbo -ing = Past Continuous." },
+              { q: "Traduce: 'Ella estaba leyendo cuando sonó el teléfono.'", a: "She was reading when the phone rang.", hint: "Estaba leyendo = was reading (Past Continuous). Sonó = rang (Past Simple)." },
+              { q: "¿Cómo se forma el Past Simple de verbos regulares?", a: "Se agrega -ed al verbo base (walk → walked, play → played).", hint: "Regulares son fáciles: solo pon -ed al final." },
+              { q: "Escribe en inglés: 'Debes practicar todos los días.'", a: "You must practice every day.", hint: "Must = debes/tienes que." },
+              { q: "¿Qué significa: 'While I was cooking, the lights went out'?", a: "Mientras yo estaba cocinando, las luces se apagaron.", hint: "While + Past Continuous describe lo que pasaba; Past Simple lo que lo interrumpió." },
+              { q: "Elige la forma correcta: 'Does she cook? Yes, she ___.'", a: "does", hint: "En respuesta corta con Does, usa does/doesn't." },
+            ],
+          },
+          {
+            id: "vocabulario",
+            name: "Vocabulario Esencial",
+            emoji: "💬",
+            tip: "Aprende palabras en grupos temáticos: así las recuerdas mejor.",
+            explanation: `Grupos de vocabulario para el examen:\n\n😊 Emociones: happy, sad, angry, nervous, excited, bored, tired\n🏃 Deportes: football, tennis, basketball, swimming, skating\n🌿 Medio ambiente: pollution, recycling, global warming, wildfire\n🍎 Comida: fruits (apple, banana), vegetables (carrot, lettuce), healthy food\n\n📌 Conectores útiles:\nFirst → Primero | Then → Luego | Finally → Finalmente | Because → Porque`,
+            video: { label: "📺 Vocabulario en inglés para adolescentes", url: "https://www.youtube.com/results?search_query=vocabulario+ingles+adolescentes+septimo+basico+español" },
+            exercises: [
+              { q: "¿Cómo se dice 'contaminación' en inglés?", a: "Pollution", hint: "Viene de 'pollute' = contaminar." },
+              { q: "¿Qué significa 'nervous'?", a: "Nervioso/a", hint: "Lo sientes antes de dar un examen o hablar en público." },
+              { q: "¿Cómo se dice 'Primero... luego... finalmente' en inglés?", a: "First... then... finally", hint: "Son conectores de secuencia muy usados en writing." },
+              { q: "¿Qué es 'healthy food'?", a: "Comida saludable (frutas, verduras, cereales integrales).", hint: "Lo opuesto es 'junk food' = comida chatarra." },
+              { q: "¿Qué significa 'wildfire'?", a: "Incendio forestal / incendio fuera de control.", hint: "Wild = salvaje / fuera de control. Fire = fuego." },
+              { q: "¿Cómo dices 'Me gusta el skateboarding'?", a: "I like skateboarding.", hint: "Deportes en inglés generalmente van con -ing después de 'like'." },
+              { q: "¿Qué significa 'make friends'?", a: "Hacer amigos", hint: "Make + [sustantivo] = hacer algo. Make friends, make plans, make mistakes." },
+              { q: "¿Cómo describes alguien que está 'bored'?", a: "Alguien que está aburrido, sin interés en lo que está haciendo.", hint: "Bored = aburrido (por falta de estímulo). Boring = la cosa aburrida." },
+              { q: "¿Qué significa 'I'm fond of music'?", a: "Me gusta mucho la música / Soy fanático/a de la música.", hint: "Fond of = tener cariño por / ser aficionado a." },
+              { q: "¿Cómo dices en inglés: 'Porque quiero ser médico'?", a: "Because I want to be a doctor.", hint: "Because = porque. Want to = querer. Be = ser/estar." },
+            ],
+          },
+        ],
+      },
+    ];
+
+    // ─── MAIN APP ─────────────────────────────────────────────────────────────
+
+    function App() {
+      const [screen, setScreen] = useState("home");
+      const [selectedSubject, setSelectedSubject] = useState(null);
+      const [selectedTopic, setSelectedTopic] = useState(null);
+      const [currentEx, setCurrentEx] = useState(0);
+      const [revealed, setRevealed] = useState(false);
+      const [showHint, setShowHint] = useState(false);
+      const [completed, setCompleted] = useState({});
+      const [seconds, setSeconds] = useState(0);
+      const [timerActive, setTimerActive] = useState(false);
+      const timerRef = useRef(null);
+
+      useEffect(() => {
+        if (timerActive) {
+          timerRef.current = setInterval(() => setSeconds((s) => s + 1), 1000);
+        } else {
+          clearInterval(timerRef.current);
+        }
+        return () => clearInterval(timerRef.current);
+      }, [timerActive]);
+
+      // Hide loading screen once React mounts
+      useEffect(() => {
+        const el = document.getElementById("loading");
+        if (el) el.style.display = "none";
+      }, []);
+
+      const formatTime = (s) =>
+        `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+
+      const totalDone = Object.values(completed).reduce((a, b) => a + b, 0);
+      const totalEx = SUBJECTS.reduce((a, s) => a + s.topics.reduce((b, t) => b + t.exercises.length, 0), 0);
+
+      function startTopic(topic) {
+        setSelectedTopic(topic);
+        setCurrentEx(0);
+        setRevealed(false);
+        setShowHint(false);
+        setSeconds(0);
+        setTimerActive(true);
+        setScreen("exercise");
+      }
+
+      function nextExercise() {
+        const key = `${selectedSubject.id}_${selectedTopic.id}`;
+        setCompleted((c) => ({ ...c, [key]: (c[key] || 0) + 1 }));
+        if (currentEx < selectedTopic.exercises.length - 1) {
+          setCurrentEx((n) => n + 1);
+          setRevealed(false);
+          setShowHint(false);
+        } else {
+          setTimerActive(false);
+          setScreen("done");
+        }
+      }
+
+      const ex = selectedTopic?.exercises[currentEx];
+      const progress = selectedTopic ? (currentEx / selectedTopic.exercises.length) * 100 : 0;
+      const subj = selectedSubject;
+
+      // ── HOME ────────────────────────────────────────────────────────────────
+      if (screen === "home") {
+        return (
+          <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#1e3a5f 100%)", fontFamily: "'Nunito', sans-serif", padding: "0 0 40px" }}>
+            <div style={{ background: "rgba(255,255,255,0.08)", backdropFilter: "blur(10px)", padding: "20px 24px", borderBottom: "1px solid rgba(255,255,255,0.12)" }}>
+              <div style={{ maxWidth: 700, margin: "0 auto", display: "flex", alignItems: "center", gap: 14 }}>
+                <div style={{ fontSize: 40 }}>🚀</div>
+                <div>
+                  <h1 style={{ margin: 0, color: "#fff", fontSize: 24, fontFamily: "'Fredoka One', sans-serif", letterSpacing: 1 }}>Estudio 7° Básico</h1>
+                  <p style={{ margin: 0, color: "rgba(255,255,255,0.65)", fontSize: 13 }}>Aprende a tu ritmo · Sin apuro · Con ejemplos claros</p>
+                </div>
+                <div style={{ marginLeft: "auto", background: "rgba(255,255,255,0.15)", borderRadius: 12, padding: "8px 14px", textAlign: "center" }}>
+                  <div style={{ color: "#fbbf24", fontSize: 18, fontWeight: 900 }}>{totalDone}</div>
+                  <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 11 }}>de {totalEx} ej.</div>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ maxWidth: 700, margin: "0 auto", padding: "28px 16px 0" }}>
+              <div style={{ background: "linear-gradient(135deg,#f59e0b,#ef4444)", borderRadius: 20, padding: "20px 24px", marginBottom: 28, display: "flex", alignItems: "center", gap: 16 }}>
+                <div style={{ fontSize: 48 }}>🌟</div>
+                <div>
+                  <h2 style={{ margin: "0 0 4px", color: "#fff", fontSize: 18, fontWeight: 900 }}>¡Hola! Puedes hacerlo 💪</h2>
+                  <p style={{ margin: 0, color: "rgba(255,255,255,0.88)", fontSize: 13, lineHeight: 1.5 }}>Cada ejercicio tiene explicación, pista y respuesta. <strong>Tómate el tiempo que necesites.</strong></p>
+                </div>
+              </div>
+
+              <div style={{ background: "rgba(255,255,255,0.08)", borderRadius: 14, padding: "14px 18px", marginBottom: 28 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                  <span style={{ color: "rgba(255,255,255,0.7)", fontSize: 13 }}>Progreso total</span>
+                  <span style={{ color: "#fbbf24", fontWeight: 800, fontSize: 13 }}>{Math.round((totalDone / totalEx) * 100)}%</span>
+                </div>
+                <div style={{ height: 10, background: "rgba(255,255,255,0.15)", borderRadius: 99, overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: `${(totalDone / totalEx) * 100}%`, background: "linear-gradient(90deg,#fbbf24,#f59e0b)", borderRadius: 99, transition: "width 0.6s" }} />
+                </div>
+              </div>
+
+              <h3 style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, letterSpacing: 2, textTransform: "uppercase", margin: "0 0 14px" }}>Elige una materia</h3>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                {SUBJECTS.map((s) => {
+                  const done = s.topics.reduce((a, t) => a + (completed[`${s.id}_${t.id}`] || 0), 0);
+                  const total = s.topics.reduce((a, t) => a + t.exercises.length, 0);
+                  return (
+                    <button key={s.id} onClick={() => { setSelectedSubject(s); setScreen("subject"); }}
+                      style={{ background: s.bg, border: `2px solid ${s.accent}`, borderRadius: 18, padding: "20px 16px", cursor: "pointer", textAlign: "left", transition: "transform 0.15s,box-shadow 0.15s", boxShadow: "0 4px 20px rgba(0,0,0,0.2)" }}
+                      onMouseOver={e => e.currentTarget.style.transform = "translateY(-3px)"}
+                      onMouseOut={e => e.currentTarget.style.transform = "translateY(0)"}
+                    >
+                      <div style={{ fontSize: 36, marginBottom: 10 }}>{s.emoji}</div>
+                      <div style={{ fontWeight: 900, color: s.color, fontSize: 15, marginBottom: 4 }}>{s.name}</div>
+                      <div style={{ fontSize: 12, color: "#6B7280", marginBottom: 10 }}>{s.topics.length} temas · {total} ejercicios</div>
+                      <div style={{ height: 6, background: "#E5E7EB", borderRadius: 99, overflow: "hidden" }}>
+                        <div style={{ height: "100%", width: `${(done / total) * 100}%`, background: s.color, borderRadius: 99 }} />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 14, padding: "16px 20px", marginTop: 28, display: "flex", gap: 12, alignItems: "flex-start" }}>
+                <span style={{ fontSize: 24 }}>💡</span>
+                <div>
+                  <div style={{ color: "#fbbf24", fontWeight: 800, fontSize: 14, marginBottom: 4 }}>Consejo para estudiar mejor</div>
+                  <div style={{ color: "rgba(255,255,255,0.65)", fontSize: 13, lineHeight: 1.6 }}>Estudia en bloques de <strong style={{ color: "#fff" }}>15–25 minutos</strong> y luego descansa 5 minutos.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // ── SUBJECT ─────────────────────────────────────────────────────────────
+      if (screen === "subject") {
+        return (
+          <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#1e3a5f 100%)", fontFamily: "'Nunito', sans-serif", padding: "0 0 40px" }}>
+            <div style={{ background: "rgba(255,255,255,0.08)", backdropFilter: "blur(10px)", padding: "16px 24px", borderBottom: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", gap: 14 }}>
+              <button onClick={() => setScreen("home")} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: 10, padding: "8px 14px", cursor: "pointer", fontSize: 20 }}>←</button>
+              <div style={{ fontSize: 32 }}>{subj.emoji}</div>
+              <h1 style={{ margin: 0, color: "#fff", fontSize: 22, fontFamily: "'Fredoka One', sans-serif" }}>{subj.name}</h1>
+            </div>
+            <div style={{ maxWidth: 700, margin: "0 auto", padding: "28px 16px" }}>
+              <h3 style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, letterSpacing: 2, textTransform: "uppercase", margin: "0 0 16px" }}>Elige un tema</h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {subj.topics.map((t) => {
+                  const done = completed[`${subj.id}_${t.id}`] || 0;
+                  const pct = Math.round((done / t.exercises.length) * 100);
+                  return (
+                    <button key={t.id} onClick={() => { setSelectedTopic(t); setScreen("topic"); }}
+                      style={{ background: subj.bg, border: `2px solid ${subj.accent}`, borderRadius: 18, padding: "20px 22px", cursor: "pointer", textAlign: "left", boxShadow: "0 4px 20px rgba(0,0,0,0.15)", transition: "transform 0.15s" }}
+                      onMouseOver={e => e.currentTarget.style.transform = "translateY(-2px)"}
+                      onMouseOut={e => e.currentTarget.style.transform = "translateY(0)"}
+                    >
+                      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
+                        <span style={{ fontSize: 28 }}>{t.emoji}</span>
+                        <div>
+                          <div style={{ fontWeight: 900, color: subj.color, fontSize: 16 }}>{t.name}</div>
+                          <div style={{ fontSize: 12, color: "#6B7280" }}>{t.exercises.length} ejercicios · {pct}% completado</div>
+                        </div>
+                        {pct === 100 && <span style={{ marginLeft: "auto", fontSize: 24 }}>✅</span>}
+                      </div>
+                      <div style={{ background: "#E5E7EB", borderRadius: 99, height: 6, overflow: "hidden" }}>
+                        <div style={{ width: `${pct}%`, height: "100%", background: subj.color, borderRadius: 99, transition: "width 0.5s" }} />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // ── TOPIC ───────────────────────────────────────────────────────────────
+      if (screen === "topic") {
+        const t = selectedTopic;
+        return (
+          <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#1e3a5f 100%)", fontFamily: "'Nunito', sans-serif", padding: "0 0 40px" }}>
+            <div style={{ background: "rgba(255,255,255,0.08)", backdropFilter: "blur(10px)", padding: "16px 24px", borderBottom: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", gap: 14 }}>
+              <button onClick={() => setScreen("subject")} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: 10, padding: "8px 14px", cursor: "pointer", fontSize: 20 }}>←</button>
+              <span style={{ fontSize: 28 }}>{t.emoji}</span>
+              <h1 style={{ margin: 0, color: "#fff", fontSize: 20, fontFamily: "'Fredoka One', sans-serif" }}>{t.name}</h1>
+            </div>
+            <div style={{ maxWidth: 700, margin: "0 auto", padding: "24px 16px" }}>
+              <div style={{ background: `linear-gradient(135deg,${subj.color}22,${subj.color}11)`, border: `2px solid ${subj.color}44`, borderRadius: 14, padding: "14px 18px", marginBottom: 20, display: "flex", gap: 10 }}>
+                <span style={{ fontSize: 22 }}>💡</span>
+                <span style={{ color: "#fff", fontSize: 14, fontWeight: 700 }}>{t.tip}</span>
+              </div>
+              <div style={{ background: "rgba(255,255,255,0.95)", borderRadius: 18, padding: "24px", marginBottom: 20, boxShadow: "0 8px 30px rgba(0,0,0,0.2)" }}>
+                <h3 style={{ margin: "0 0 14px", color: subj.color, fontSize: 17, fontWeight: 900 }}>📖 Explicación</h3>
+                {t.explanation.split("\n").map((line, i) => (
+                  <p key={i} style={{ margin: "0 0 8px", color: "#374151", fontSize: 14, lineHeight: 1.7 }}>{line}</p>
+                ))}
+              </div>
+              <a href={t.video.url} target="_blank" rel="noopener noreferrer"
+                style={{ display: "flex", alignItems: "center", gap: 14, background: "#FF0000", borderRadius: 14, padding: "16px 20px", textDecoration: "none", marginBottom: 28, boxShadow: "0 4px 20px rgba(255,0,0,0.3)" }}>
+                <span style={{ fontSize: 32 }}>▶️</span>
+                <div>
+                  <div style={{ color: "#fff", fontWeight: 900, fontSize: 15 }}>{t.video.label}</div>
+                  <div style={{ color: "rgba(255,255,255,0.75)", fontSize: 12 }}>Buscar en YouTube · En español · Abre en nueva pestaña</div>
+                </div>
+              </a>
+              <button onClick={() => startTopic(t)}
+                style={{ width: "100%", background: `linear-gradient(135deg,${subj.color},${subj.color}aa)`, border: "none", borderRadius: 16, padding: "18px", color: "#fff", fontSize: 18, fontWeight: 900, cursor: "pointer", boxShadow: `0 6px 25px ${subj.color}55`, fontFamily: "'Nunito', sans-serif" }}>
+                ✏️ Comenzar {t.exercises.length} ejercicios
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      // ── EXERCISE ────────────────────────────────────────────────────────────
+      if (screen === "exercise" && ex) {
+        return (
+          <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#1e3a5f 100%)", fontFamily: "'Nunito', sans-serif", padding: "0 0 40px" }}>
+            <div style={{ background: "rgba(255,255,255,0.08)", backdropFilter: "blur(10px)", padding: "14px 20px", borderBottom: "1px solid rgba(255,255,255,0.12)" }}>
+              <div style={{ maxWidth: 700, margin: "0 auto", display: "flex", alignItems: "center", gap: 12 }}>
+                <button onClick={() => { setScreen("topic"); setTimerActive(false); }} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: 10, padding: "8px 12px", cursor: "pointer", fontSize: 18 }}>←</button>
+                <span style={{ fontSize: 20 }}>{selectedTopic.emoji}</span>
+                <span style={{ color: "#fff", fontWeight: 800, fontSize: 14, flex: 1 }}>{selectedTopic.name}</span>
+                <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "6px 12px", color: "#fbbf24", fontWeight: 900, fontSize: 15, fontFamily: "monospace" }}>⏱ {formatTime(seconds)}</div>
+              </div>
+            </div>
+            <div style={{ maxWidth: 700, margin: "0 auto", padding: "20px 16px" }}>
+              <div style={{ marginBottom: 20 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                  <span style={{ color: "rgba(255,255,255,0.6)", fontSize: 13 }}>Pregunta {currentEx + 1} de {selectedTopic.exercises.length}</span>
+                  <span style={{ color: subj.color, fontWeight: 800, fontSize: 13 }}>{Math.round(progress)}% listo</span>
+                </div>
+                <div style={{ height: 8, background: "rgba(255,255,255,0.15)", borderRadius: 99, overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: `${progress}%`, background: `linear-gradient(90deg,${subj.color},${subj.color}aa)`, borderRadius: 99, transition: "width 0.5s" }} />
+                </div>
+              </div>
+              <div style={{ background: "rgba(251,191,36,0.12)", border: "1px solid rgba(251,191,36,0.3)", borderRadius: 12, padding: "10px 16px", marginBottom: 20, display: "flex", gap: 10, alignItems: "center" }}>
+                <span style={{ fontSize: 20 }}>🐢</span>
+                <span style={{ color: "#fbbf24", fontSize: 13, fontWeight: 700 }}>Tómate el tiempo que necesites. No hay apuro. Piensa con calma.</span>
+              </div>
+              <div style={{ background: "#fff", borderRadius: 20, padding: "28px 24px", marginBottom: 18, boxShadow: "0 10px 40px rgba(0,0,0,0.25)" }}>
+                <div style={{ color: subj.color, fontSize: 12, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", marginBottom: 12 }}>Ejercicio {currentEx + 1}</div>
+                <p style={{ margin: 0, color: "#111827", fontSize: 18, fontWeight: 800, lineHeight: 1.5 }}>{ex.q}</p>
+              </div>
+              {!showHint ? (
+                <button onClick={() => setShowHint(true)} style={{ width: "100%", background: "rgba(255,255,255,0.08)", border: "2px dashed rgba(255,255,255,0.25)", borderRadius: 14, padding: "14px", color: "rgba(255,255,255,0.7)", fontSize: 14, fontWeight: 700, cursor: "pointer", marginBottom: 12, fontFamily: "'Nunito', sans-serif" }}>
+                  🤔 Ver pista (si la necesitas)
+                </button>
+              ) : (
+                <div style={{ background: "rgba(251,191,36,0.15)", border: "2px solid rgba(251,191,36,0.4)", borderRadius: 14, padding: "16px 18px", marginBottom: 12, display: "flex", gap: 10 }}>
+                  <span style={{ fontSize: 22 }}>💡</span>
+                  <span style={{ color: "#fbbf24", fontSize: 14, lineHeight: 1.6 }}>{ex.hint}</span>
+                </div>
+              )}
+              {!revealed ? (
+                <button onClick={() => setRevealed(true)} style={{ width: "100%", background: `linear-gradient(135deg,${subj.color},${subj.color}bb)`, border: "none", borderRadius: 16, padding: "18px", color: "#fff", fontSize: 16, fontWeight: 900, cursor: "pointer", marginBottom: 14, fontFamily: "'Nunito', sans-serif", boxShadow: `0 6px 25px ${subj.color}44` }}>
+                  👁 Ver respuesta
+                </button>
+              ) : (
+                <>
+                  <div style={{ background: "linear-gradient(135deg,#10B981,#059669)", borderRadius: 16, padding: "20px 22px", marginBottom: 14, boxShadow: "0 6px 25px rgba(16,185,129,0.3)" }}>
+                    <div style={{ color: "rgba(255,255,255,0.7)", fontSize: 12, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", marginBottom: 8 }}>✅ Respuesta correcta</div>
+                    <p style={{ margin: 0, color: "#fff", fontSize: 17, fontWeight: 900, lineHeight: 1.5 }}>{ex.a}</p>
+                  </div>
+                  <button onClick={nextExercise} style={{ width: "100%", background: currentEx < selectedTopic.exercises.length - 1 ? "linear-gradient(135deg,#8B5CF6,#6D28D9)" : "linear-gradient(135deg,#F59E0B,#D97706)", border: "none", borderRadius: 16, padding: "18px", color: "#fff", fontSize: 16, fontWeight: 900, cursor: "pointer", fontFamily: "'Nunito', sans-serif", boxShadow: "0 6px 25px rgba(139,92,246,0.4)" }}>
+                    {currentEx < selectedTopic.exercises.length - 1 ? "➡️ Siguiente ejercicio" : "🎉 ¡Terminé el tema!"}
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      // ── DONE ────────────────────────────────────────────────────────────────
+      if (screen === "done") {
+        return (
+          <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#1e3a5f 100%)", fontFamily: "'Nunito', sans-serif", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 24 }}>
+            <div style={{ textAlign: "center", maxWidth: 400 }}>
+              <div style={{ fontSize: 80, marginBottom: 20 }}>🏆</div>
+              <h1 style={{ color: "#fbbf24", fontFamily: "'Fredoka One', sans-serif", fontSize: 32, margin: "0 0 12px" }}>¡Excelente!</h1>
+              <p style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, lineHeight: 1.6, marginBottom: 8 }}>
+                Completaste <strong style={{ color: "#fff" }}>{selectedTopic?.name}</strong>
+              </p>
+              <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, marginBottom: 30 }}>
+                Tiempo empleado: <strong style={{ color: "#fbbf24" }}>{formatTime(seconds)}</strong>
+              </p>
+              <div style={{ display: "flex", gap: 14, flexDirection: "column" }}>
+                <button onClick={() => { setScreen("subject"); setTimerActive(false); }} style={{ background: `linear-gradient(135deg,${subj.color},${subj.color}aa)`, border: "none", borderRadius: 14, padding: "16px", color: "#fff", fontSize: 15, fontWeight: 900, cursor: "pointer", fontFamily: "'Nunito', sans-serif" }}>
+                  📚 Ver otros temas de {subj.name}
+                </button>
+                <button onClick={() => { setScreen("home"); setTimerActive(false); }} style={{ background: "rgba(255,255,255,0.1)", border: "2px solid rgba(255,255,255,0.2)", borderRadius: 14, padding: "16px", color: "#fff", fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "'Nunito', sans-serif" }}>
+                  🏠 Volver al inicio
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      return null;
+    }
+
+    // Mount
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>
